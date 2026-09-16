@@ -1,0 +1,61 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.0.7'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.soft2preqcgate'
+version = '0.0.1-SNAPSHOT'
+description = 'soft2preqcgate'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    // Swagger UI (Springdoc OpenAPI)
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.0.3'
+
+    // Flyway 코어
+    implementation 'org.springframework.boot:spring-boot-starter-flyway'
+    // Oracle용 Flyway 확장 모듈 (런타임 시에만 필요)
+    runtimeOnly 'org.flywaydb:flyway-database-oracle'
+
+    // Spring MVC - REST API
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Redis: Lettuce
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // MyBatis: DataSource -> SqlSessionFactory -> SqlSessionTemplate -> Mapper
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:4.0.1'
+
+    // Oracle
+    runtimeOnly 'com.oracle.database.jdbc:ojdbc11'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:4.0.1'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
