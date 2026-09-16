@@ -2,29 +2,31 @@ server:
   port: ${SOFT2PREQCGATE_API_PORT:8082}
 
 spring:
+  config:
+    import: "optional:file:.idea/.mysettings.ini[.properties]"
   datasource:
-    url: ${SOFT2PREQCGATE_DB_URL}
-    username: ${SOFT2PREQCGATE_DB_USERNAME}
-    password: ${SOFT2PREQCGATE_DB_PASSWORD}
+    url: ${SOFT2COST_DB_URL}
+    username: ${SOFT2COST_DB_USERNAME}
+    password: ${SOFT2COST_DB_PASSWORD}
     driver-class-name: oracle.jdbc.OracleDriver
     hikari:
-      pool-name: Soft2PreQcGateHikariPool
-      minimum-idle: ${SOFT2PREQCGATE_DB_MIN_IDLE:5}
-      maximum-pool-size: ${SOFT2PREQCGATE_DB_MAX_POOL_SIZE:10}
-      connection-timeout: ${SOFT2PREQCGATE_DB_CONNECTION_TIMEOUT_MS:30000}
+      pool-name: Soft2CostHikariPool
+      minimum-idle: ${SOFT2COST_DB_MIN_IDLE:5}
+      maximum-pool-size: ${SOFT2COST_DB_MAX_POOL_SIZE:10}
+      connection-timeout: ${SOFT2COST_DB_CONNECTION_TIMEOUT_MS:30000}
   data:
     redis:
-      host: ${SOFT2PREQCGATE_REDIS_HOST:localhost}
-      port: ${SOFT2PREQCGATE_REDIS_PORT:6379}
-      password: ${SOFT2PREQCGATE_REDIS_PASSWORD}
-      database: ${SOFT2PREQCGATE_REDIS_DATABASE:0}
-      connect-timeout: ${SOFT2PREQCGATE_REDIS_CONNECT_TIMEOUT:3s}
-      timeout: ${SOFT2PREQCGATE_REDIS_TIMEOUT:3s}
+      host: ${SOFT2COST_REDIS_HOST:localhost}
+      port: ${SOFT2COST_REDIS_PORT:6379}
+      password: ${SOFT2COST_REDIS_PASSWORD}
+      database: ${SOFT2COST_REDIS_DATABASE:0}
+      connect-timeout: ${SOFT2COST_REDIS_CONNECT_TIMEOUT:3s}
+      timeout: ${SOFT2COST_REDIS_TIMEOUT:3s}
   flyway:
-    enabled: ${SOFT2PREQCGATE_FLYWAY_ENABLED:true}
+    enabled: ${SOFT2COST_FLYWAY_ENABLED:false}
     locations: classpath:/db/migration
-    baseline-on-migrate: ${SOFT2PREQCGATE_FLYWAY_BASELINE_ON_MIGRATE:true}
-    baseline-version: ${SOFT2PREQCGATE_FLYWAY_BASELINE_VERSION:0}
+    baseline-on-migrate: ${SOFT2COST_FLYWAY_BASELINE_ON_MIGRATE:true}
+    baseline-version: ${SOFT2COST_FLYWAY_BASELINE_VERSION:0}
     encoding: UTF-8
 
 mybatis:
@@ -34,11 +36,11 @@ mybatis:
 
 soft2preqcgate:
   security:
-    swagger-enabled: ${SOFT2PREQCGATE_SWAGGER_ENABLED:true}
+    swagger-enabled: ${SOFT2PREQCGATE_SWAGGER_ENABLED:false}
 
   cors:
     allowed-origins:
-      - ${SOFT2PREQCGATE_ALLOWED_ORIGIN:http://localhost:9091}
+      - ${SOFT2PREQCGATE_NEXACRO_ORIGIN:http://localhost:9091}
 
   auth:
     session-ttl-hours: ${SOFT2PREQCGATE_SESSION_TTL_HOURS:8}

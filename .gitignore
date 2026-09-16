@@ -26,6 +26,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+### Reports
+docs/
+docs/reports/**
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -35,3 +39,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# Local runtime log
+/debug.log
