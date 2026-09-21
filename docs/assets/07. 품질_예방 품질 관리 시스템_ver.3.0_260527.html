@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title></title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --hw:#F37321;--hw-lt:#FFF4EC;--hw-dk:#D45E10;--hw-mid:#F9A86C;
+  --bg:#F7F8FA;--card:#FFF;--bd:#E5E7EB;--tx:#1B1D21;--sub:#6B7280;
+  --ok:#16A34A;--ok-bg:#F0FDF4;--dn:#DC2626;--dn-bg:#FEF2F2;--wn:#D97706;--wn-bg:#FFFBEB;
+  --rl:#4F46E5;--rl-bg:#EEF2FF;
+  --g1:#DC2626;--g2:#EA580C;--g3:#D97706;--g4:#2563EB;--g5:#6B7280;
+  --r:6px;--font:'Pretendard Variable','Pretendard',-apple-system,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:13px}body{font-family:var(--font);background:var(--bg);color:var(--tx);line-height:1.55;min-height:100vh}
+
+/* === LOGIN === */
+.login-overlay{position:fixed;inset:0;background:#fff;z-index:9999;display:flex;align-items:center;justify-content:center}
+.login-overlay.hide{display:none}
+.login-box{width:400px;max-width:92vw;text-align:center}
+.login-logo{display:flex;align-items:center;justify-content:center;margin-bottom:32px}
+.login-logo span{font-size:22px;font-weight:800;color:var(--hw);letter-spacing:-0.5px}
+.login-title{font-size:20px;font-weight:800;color:var(--tx);margin-bottom:6px}
+.login-sub{font-size:12px;color:var(--sub);margin-bottom:28px}
+.login-personas{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.persona-btn{display:flex;align-items:center;gap:14px;padding:14px 18px;border:1.5px solid var(--bd);border-radius:10px;background:#fff;cursor:pointer;transition:.15s;text-align:left}
+.persona-btn:hover{border-color:var(--hw);background:var(--hw-lt)}
+.persona-btn.sel{border-color:var(--hw);background:var(--hw-lt);box-shadow:0 0 0 3px rgba(243,115,33,.12)}
+.p-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.p-name{font-size:13px;font-weight:700;color:var(--tx)}
+.p-desc{font-size:11px;color:var(--sub);margin-top:2px}
+.login-enter{width:100%;padding:13px;border-radius:var(--r);background:var(--hw);color:#fff;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:.15s;font-family:var(--font)}
+.login-enter:hover{background:var(--hw-dk)}
+.login-enter:disabled{background:#ccc;cursor:default}
+.login-footer{font-size:10px;color:#bbb;margin-top:20px}
+
+/* === HEADER === */
+.hdr{background:#fff;border-bottom:2px solid var(--hw);padding:0 24px;display:flex;align-items:center;height:52px;position:sticky;top:0;z-index:100}
+.hdr-logo{display:flex;align-items:center;gap:8px;cursor:pointer;text-decoration:none}
+.hdr-logo span{font-weight:800;font-size:16px;color:var(--hw);letter-spacing:-0.5px}
+.hdr-nav{margin-left:28px;display:flex;gap:2px}
+.hdr-nav button{background:none;border:none;font:inherit;padding:7px 14px;border-radius:var(--r);cursor:pointer;color:var(--sub);font-size:12px;white-space:nowrap;transition:.12s}
+.hdr-nav button:hover{background:var(--hw-lt);color:var(--hw)}
+.hdr-nav button.on{background:var(--hw-lt);color:var(--hw);font-weight:600}
+.hdr-user{margin-left:auto;display:flex;align-items:center;gap:10px}
+.hdr-user .u-name{font-size:11.5px;font-weight:600}
+.hdr-user .u-role{font-size:10px;color:var(--sub)}
+.hdr-logout{font-size:10.5px;color:var(--sub);cursor:pointer;border:1px solid var(--bd);padding:3px 10px;border-radius:var(--r);background:#fff}
+.hdr-logout:hover{color:var(--dn);border-color:var(--dn)}
+
+.wrap{max-width:1440px;margin:0 auto;padding:20px 24px 100px}
+
+/* === COMMON === */
+.btn{font:inherit;font-size:12px;padding:6px 14px;border-radius:var(--r);cursor:pointer;border:1px solid var(--bd);background:#fff;color:var(--tx);transition:.12s;white-space:nowrap}
+.btn:hover{background:#f8f8f8}
+.btn-hw{background:var(--hw);color:#fff;border-color:var(--hw)}
+.btn-hw:hover{background:var(--hw-dk)}
+.btn-sm{padding:4px 10px;font-size:11px}
+.btn-xs{padding:2px 8px;font-size:10.5px}
+
+/* Stats */
+.stat-row{display:flex;gap:10px;margin-bottom:18px;align-items:stretch;flex-wrap:wrap}
+.s-card{background:#fff;border:1px solid var(--bd);border-radius:var(--r);padding:12px 16px;cursor:pointer;transition:.12s;flex:1;min-width:110px}
+.s-card:hover{border-color:var(--hw)}
+.s-card.on{border-color:var(--hw);background:var(--hw-lt)}
+.s-lbl{font-size:10px;color:var(--sub);white-space:nowrap}
+.s-val{font-size:20px;font-weight:800;margin:2px 0}
+.s-sub{font-size:9.5px;color:var(--sub)}
+.major-wrap{display:flex;gap:10px;border:2px dashed var(--hw);border-radius:10px;padding:8px;position:relative;flex-shrink:0}
+.major-wrap::before{content:'주요기자재 (QC Gate 대상)';position:absolute;top:-9px;left:12px;background:var(--bg);padding:0 6px;font-size:9px;font-weight:700;color:var(--hw)}
+
+/* Metrics */
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.m-card{background:#fff;border:1px solid var(--bd);border-radius:var(--r);padding:12px 14px}
+.m-title{font-size:10px;color:var(--sub);font-weight:600;margin-bottom:5px}
+.m-bar{height:7px;border-radius:4px;background:#f0f1f3;overflow:hidden;margin-bottom:3px}
+.m-fill{height:100%;border-radius:4px;transition:width .4s}
+.m-val{font-size:11px;font-weight:600}
+
+/* SWBS */
+.sw-sec{background:#fff;border:1px solid var(--bd);border-radius:var(--r);margin-bottom:8px;overflow:hidden}
+.sw-hdr{display:flex;align-items:center;padding:10px 14px;cursor:pointer;gap:9px;transition:.08s}
+.sw-hdr:hover{background:#fafbfc}
+.sw-arr{font-size:10px;color:var(--sub);transition:transform .2s;flex-shrink:0}
+.sw-sec.open .sw-arr{transform:rotate(90deg)}
+.sw-title{font-weight:700;font-size:12px;white-space:nowrap}
+.sw-badges{display:flex;gap:4px;margin-left:6px;flex-wrap:nowrap}
+.gb{font-size:9px;padding:1px 6px;border-radius:10px;font-weight:700;white-space:nowrap}
+.gb1{background:#fef2f2;color:var(--g1)}.gb2{background:#fff7ed;color:var(--g2)}.gb3{background:#fffbeb;color:var(--g3)}.gb4{background:#eff6ff;color:var(--g4)}.gb5{background:#f3f4f6;color:var(--g5)}
+.sw-bar{margin-left:auto;width:90px;height:5px;border-radius:3px;background:#eee;overflow:hidden;display:flex;flex-shrink:0}
+.sw-bar div{height:100%}
+.sw-cnt{font-size:10px;color:var(--sub);margin-left:6px;white-space:nowrap;flex-shrink:0}
+.sw-body{display:none;border-top:1px solid var(--bd)}.sw-sec.open .sw-body{display:block}
+
+/* Table */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:fixed}
+th{background:#fafbfc;font-weight:600;color:var(--sub);text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);white-space:nowrap}
+td{padding:7px 8px;border-bottom:1px solid #f3f4f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+tr:hover td{background:#fefefe}
+tr.mj td{background:#fffaf5}
+.cg{width:54px;text-align:center}.ct{width:68px}.cn{width:140px}.cs{width:50px;text-align:center}.cto{width:60px;text-align:center}.cll{width:78px;text-align:center}.cpo{width:78px;text-align:center}.cor{width:74px;text-align:center}.ca{width:48px;text-align:center}
+.gt{display:inline-block;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap}
+.gt1{background:#fef2f2;color:var(--g1)}.gt2{background:#fff7ed;color:var(--g2)}.gt3{background:#fffbeb;color:var(--g3)}.gt4{background:#eff6ff;color:var(--g4)}.gt5{background:#f3f4f6;color:var(--g5)}
+.st{font-size:10.5px;font-weight:600;white-space:nowrap}
+.st-ok{color:var(--ok)}.st-ng{color:var(--dn)}.st-pg{color:var(--wn)}.st-rl{color:var(--rl)}.st-na{color:#9ca3af}
+.ob{display:inline-block;padding:1px 7px;border-radius:10px;font-size:9.5px;font-weight:700;white-space:nowrap}
+.ob-bl{background:#fef2f2;color:var(--dn)}.ob-co{background:#fffbeb;color:var(--wn)}.ob-ok{background:#f0fdf4;color:var(--ok)}.ob-rl{background:var(--rl-bg);color:var(--rl)}.ob-na{background:#f3f4f6;color:#9ca3af}
+
+/* Detail fullscreen */
+.det{display:none;position:fixed;inset:0;z-index:200;background:var(--bg);overflow-y:auto}.det.show{display:block}
+.det-bar{position:sticky;top:0;z-index:5;background:#fff;border-bottom:2px solid var(--hw);padding:0 24px;height:48px;display:flex;align-items:center;gap:10px}
+.det-bar h3{font-size:13.5px;font-weight:700;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.det-in{max-width:1100px;margin:0 auto;padding:18px 24px 60px}
+
+/* Gate flow */
+.gf{display:flex;align-items:center;gap:0;margin-bottom:18px;background:#fff;border:1px solid var(--bd);border-radius:var(--r);padding:14px 20px}
+.gs{display:flex;align-items:center;gap:7px;white-space:nowrap}
+.gd{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0}
+.gd-rl{background:var(--rl)}.gd-ok{background:var(--ok)}.gd-ng{background:var(--dn)}.gd-pg{background:var(--wn)}.gd-na{background:#d1d5db}
+.gl{font-size:11.5px;font-weight:500}
+.ga{margin:0 12px;color:#ccc;font-size:13px;flex-shrink:0}
+.gr{margin-left:auto;padding:7px 18px;border-radius:var(--r);font-weight:700;font-size:12.5px;white-space:nowrap}
+
+/* Tabs */
+.tabs{display:flex;gap:2px;margin-bottom:14px;border-bottom:2px solid var(--bd)}
+.tb{background:none;border:none;font:inherit;padding:8px 18px;cursor:pointer;font-size:12px;color:var(--sub);position:relative;white-space:nowrap;transition:.12s}
+.tb:hover{color:var(--tx)}.tb.on{color:var(--hw);font-weight:700}
+.tb.on::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--hw)}
+.tp{display:none}.tp.on{display:block}
+.proc{background:#fafbfc;border:1px solid var(--bd);border-radius:var(--r);padding:11px 14px;margin-bottom:14px;font-size:11px;color:var(--sub);line-height:1.65}
+.proc strong{color:var(--tx)}
+.ref-ban{background:#fffbeb;border:1px solid #fde68a;border-radius:var(--r);padding:9px 14px;margin-bottom:14px;font-size:11px;color:#92400e}
+
+/* LL table */
+.ll{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:auto}
+.ll th{background:#fafbfc;font-weight:600;padding:7px 8px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+.ll td{padding:7px 8px;border-bottom:1px solid #f3f4f6;vertical-align:top}
+.ll .lno{width:30px;text-align:center}.ll .ltp{width:48px;text-align:center}.ll .lca{width:66px;text-align:center}
+.ll .lct{min-width:200px;line-height:1.4}.ll .lsr{width:62px;text-align:center}.ll .lev{width:140px}.ll .lat{width:110px}.ll .lst{width:52px;text-align:center}
+.evt{display:inline-block;padding:1px 5px;border-radius:8px;font-size:9px;font-weight:700;white-space:nowrap}
+.ev-p{background:#fef2f2;color:var(--dn)}.ev-c{background:#eff6ff;color:var(--g4)}
+.uz{border:1px dashed #ccc;border-radius:4px;padding:5px;text-align:center;cursor:pointer;font-size:10px;color:var(--sub);transition:.12s;background:#fff}
+.uz:hover{border-color:var(--hw);color:var(--hw)}
+.ud{font-size:10.5px;color:var(--ok);font-weight:600}
+
+/* POS table */
+.pos{width:100%;border-collapse:collapse;font-size:11.5px;table-layout:auto}
+.pos th{background:#fafbfc;font-weight:600;padding:7px 8px;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap}
+.pos td{padding:7px 8px;border-bottom:1px solid #f3f4f6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:middle}
+.pfail td{background:#fef2f2}.pwarn td{background:#fffbeb}
+.jok{color:var(--ok);font-weight:700}.jng{color:var(--dn);font-weight:700}.jwn{color:var(--wn);font-weight:700}
+
+/* Panels (Settings & Sim) */
+.pov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.2);z-index:300}.pov.show{display:block}
+.pnl{position:fixed;top:0;right:-460px;width:440px;height:100%;background:#fff;z-index:301;transition:right .25s;box-shadow:-4px 0 20px rgba(0,0,0,.08);overflow-y:auto}
+.pnl.show{right:0}
+.pnl-h{padding:14px 18px;border-bottom:2px solid var(--hw);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:2}
+.pnl-h h3{font-size:13px;font-weight:700;color:var(--hw)}
+.pnl-b{padding:18px}
+.fld{margin-bottom:12px}
+.fld label{display:block;font-size:10.5px;font-weight:600;color:var(--sub);margin-bottom:3px}
+.fld input[type=range]{width:100%;accent-color:var(--hw)}
+.fr{display:flex;align-items:center;gap:8px}
+.fv{font-size:12.5px;font-weight:700;color:var(--hw);min-width:36px;text-align:right}
+.fs{font-size:10px;color:var(--sub);padding:5px 0;font-weight:600}
+.sim-r{background:#fafbfc;border-radius:var(--r);padding:14px;text-align:center;margin-top:12px;border:1px solid var(--bd)}
+.sim-s{font-size:30px;font-weight:800}.sim-g{font-size:13px;font-weight:700;margin-top:3px}
+.close-btn{background:none;border:none;font-size:18px;cursor:pointer;color:var(--sub);padding:4px}
+
+/* Notification Tray (Bottom Fixed) */
+.notif-tray{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:800px;background:#fff;border:1px solid var(--hw);border-bottom:none;border-radius:12px 12px 0 0;box-shadow:0 -4px 20px rgba(0,0,0,.15);z-index:150;transition:transform .3s ease;display:none}
+.notif-tray.show{display:block}
+.notif-tray.minimized{transform:translate(-50%, calc(100% - 40px))}
+.notif-tray-hdr{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--hw-lt);border-radius:12px 12px 0 0;cursor:pointer;height:40px;user-select:none}
+.notif-tray-hdr h3{font-size:12.5px;font-weight:700;color:var(--hw);display:flex;align-items:center;gap:8px}
+.notif-badge{font-size:10px;background:var(--dn);color:#fff;padding:1px 7px;border-radius:10px}
+.notif-toggle{background:none;border:none;font-size:12px;color:var(--hw);cursor:pointer;transition:transform .3s;pointer-events:none}
+.notif-tray.minimized .notif-toggle{transform:rotate(180deg)}
+.notif-tray-body{max-height:280px;overflow-y:auto;background:#fff}
+.notif-row{display:flex;align-items:center;padding:10px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;gap:10px;transition:.08s}
+.notif-row:last-child{border-bottom:none}
+.notif-row:hover{background:var(--bg)}
+.notif-icon{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.notif-body{flex:1;min-width:0}
+.notif-title{font-size:11.5px;font-weight:600;color:var(--tx)}
+.notif-desc{font-size:10px;color:var(--sub);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.notif-time{font-size:9.5px;color:var(--sub);flex-shrink:0}
+
+.toast{position:fixed;bottom:60px;left:50%;transform:translateX(-50%);background:#1B1D21;color:#fff;padding:10px 22px;border-radius:var(--r);font-size:12px;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none}
+.toast.show{opacity:1}
+@media(max-width:900px){.stat-row{flex-wrap:wrap}.metrics{grid-template-columns:repeat(2,1fr)}}
+
+/* === 발주 임박 위험 알림 === */
+.risk-sec{background:#fff;border:1.5px solid var(--dn);border-radius:var(--r);margin-bottom:16px;overflow:hidden}
+.risk-hdr{padding:10px 16px;background:#fef2f2;border-bottom:1px solid #fecaca;display:flex;align-items:center;gap:8px}
+.risk-hdr h3{font-size:12.5px;font-weight:700;color:var(--dn)}
+.risk-cnt{background:var(--dn);color:#fff;font-size:9.5px;font-weight:700;padding:1px 7px;border-radius:10px}
+.risk-row{display:flex;align-items:center;padding:9px 16px;border-bottom:1px solid #fff1f1;cursor:pointer;gap:10px;transition:.08s}
+.risk-row:last-child{border-bottom:none}
+.risk-row:hover{background:#fff5f5}
+.risk-dday{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;flex-shrink:0}
+.risk-dday.urgent{background:#fef2f2;color:var(--dn)}
+.risk-dday.warning{background:#fffbeb;color:var(--wn)}
+</style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor msdt:dt="string">Seungdae Shin (KR - ADVS)</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor>
+<mso:Order msdt:dt="string">1274600.00000000</mso:Order>
+<mso:_ExtendedDescription msdt:dt="string"></mso:_ExtendedDescription>
+<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author msdt:dt="string">Seungdae Shin (KR - ADVS)</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author>
+<mso:ComplianceAssetId msdt:dt="string"></mso:ComplianceAssetId>
+<mso:TriggerFlowInfo msdt:dt="string"></mso:TriggerFlowInfo>
+<mso:_dlc_DocId msdt:dt="string">N47C3TDSVDNJ-1206405406-12746</mso:_dlc_DocId>
+<mso:ContentTypeId msdt:dt="string">0x010100A56A2E68EB9F194CAA91164E97C10BE1</mso:ContentTypeId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">34d70a1d-f6ac-4c9f-8bcf-0e35206df582</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://pwckor-my.sharepoint.com/personal/seungsoo_lee_pwc_com/_layouts/15/DocIdRedir.aspx?ID=N47C3TDSVDNJ-1206405406-12746, N47C3TDSVDNJ-1206405406-12746</mso:_dlc_DocIdUrl>
+<mso:_SourceUrl msdt:dt="string"></mso:_SourceUrl>
+<mso:_SharedFileIndex msdt:dt="string"></mso:_SharedFileIndex>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-overlay" id="loginOv">
+  <div class="login-box">
+    <div class="login-logo"><span>Hanwha Ocean</span></div>
+    <div class="login-title">Pre-QC Gate System</div>
+    <div class="login-sub">특수선 주요기자재 선행 품질검증 관리 시스템 · 페르소나 선택</div>
+    <div class="login-personas" id="personas"></div>
+    <button class="login-enter" id="loginBtn" disabled onclick="doLogin()">접속</button>
+    <div class="login-footer">Hanwha Ocean · HO-2025-SUB · v14.0 Mock-up</div>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="hdr" id="hdr" style="display:none">
+  <a class="hdr-logo" onclick="goHome()">
+    <span>Hanwha Ocean</span> <span style="font-size:13px;color:var(--sub);font-weight:600;margin-left:6px;letter-spacing:0">Pre-QC Gate</span>
+  </a>
+  <nav class="hdr-nav" id="hdrNav"></nav>
+  <div class="hdr-user">
+    <div style="text-align:right"><div class="u-name" id="uName"></div><div class="u-role" id="uRole"></div></div>
+    <button class="hdr-logout" onclick="doLogout()">로그아웃</button>
+  </div>
+</header>
+
+<div class="wrap" id="app"></div>
+
+<!-- Bottom Notification Tray -->
+<div id="notifTray" class="notif-tray"></div>
+
+<!-- Detail Modal -->
+<div class="det" id="detW"><div class="det-bar" id="detBar"></div><div class="det-in" id="detIn"></div></div>
+
+<!-- Settings & Sim Panels -->
+<div class="pov" id="pov" onclick="closePanel()"></div>
+<div class="pnl" id="setP"><div class="pnl-h"><h3>가중치 · 등급 설정</h3><button class="close-btn" onclick="closePanel()">×</button></div><div class="pnl-b" id="setB"></div></div>
+<div class="pnl" id="simP"><div class="pnl-h"><h3>점수 시뮬레이터</h3><button class="close-btn" onclick="closePanel()">×</button></div><div class="pnl-b" id="simB"></div></div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ========== PERSONA CONFIG ========== */
+const PERSONAS=[
+  {id:'design',name:'설계담당자 (이책임)',icon:'📐',color:'#2563EB',desc:'내 소관 기자재 증빙/체크 · 품질 승인요청 · POS 해명 작성',alerts:['HU-05: 선수 소나돔 구조재 벤더 성적서 메일 수신건 업로드 필요']},
+  {id:'quality',name:'품질담당자 (김팀장)',icon:'🔍',color:'#16A34A',desc:'현황 모니터링 · L/L 증빙 승인 · POS 설계 의견 참조 및 조건부 승인',alerts:['ME-01: 주추진 디젤엔진 L/L 증빙 승인 대기', 'RG-01: 감속기어 L/L 증빙 승인 대기']}
+];
+let curPersona=null;
+
+/* ========== CONFIG & GRADE ========== */
+const C={wF:40,wI:60,fS:30,fP:30,fN:40,iS:30,iC:30,iQ:40,th:[80,60,40,20]};
+const GI=[
+  {g:1,l:'1등급',c:'var(--g1)',cls:'gt1',bg:'gb1',d:'최고위험'},
+  {g:2,l:'2등급',c:'var(--g2)',cls:'gt2',bg:'gb2',d:'고위험'},
+  {g:3,l:'3등급',c:'var(--g3)',cls:'gt3',bg:'gb3',d:'보통'},
+  {g:4,l:'4등급',c:'var(--g4)',cls:'gt4',bg:'gb4',d:'저위험'},
+  {g:5,l:'5등급',c:'var(--g5)',cls:'gt5',bg:'gb5',d:'양호'}
+];
+function grade(s){const t=C.th;return s>=t[0]?1:s>=t[1]?2:s>=t[2]?3:s>=t[3]?4:5}
+function isMaj(g){return g<=2}
+
+const SW={
+  '100':{n:'선체구조',f:'SWBS 100 – 선체구조'},'200':{n:'추진체계',f:'SWBS 200 – 추진체계'},
+  '300':{n:'전력체계',f:'SWBS 300 – 전력체계'},'400':{n:'지휘통제',f:'SWBS 400 – 지휘통제'},
+  '500':{n:'보조체계',f:'SWBS 500 – 보조체계'},'600':{n:'의장·거주',f:'SWBS 600 – 의장/거주'},
+  '700':{n:'무장체계',f:'SWBS 700 – 무장체계'}
+};
+
+/* ========== EQUIPMENT ========== */
+const EQ=[
+  {id:'HU-01',sw:'100',mgr:'kim',nm:'내압선체 강판',fS:88,iS:92,lD:5,lT:5,pD:7,pT:7,pG:0,due:'2025-06-15',rl:true},
+  {id:'HU-02',sw:'100',mgr:'lee',nm:'외부 프레임 구조재',fS:72,iS:65,lD:3,lT:3,pD:4,pT:5,pG:1,due:'2025-08-01',rl:false},
+  {id:'HU-03',sw:'100',mgr:'kim',nm:'격벽 관통부 피팅',fS:45,iS:50,lD:3,lT:3,pD:4,pT:4,pG:0,due:'2025-10-01',rl:false},
+  {id:'HU-04',sw:'100',mgr:'lee',nm:'내부 데크 플레이트',fS:30,iS:35,lD:2,lT:2,pD:3,pT:3,pG:0,due:'2025-11-15',rl:false},
+  {id:'HU-05',sw:'100',mgr:'lee',nm:'선수 소나돔 구조재',fS:82,iS:78,lD:3,lT:5,pD:3,pT:5,pG:2,due:'2025-07-20',rl:false}, 
+  {id:'HU-06',sw:'100',mgr:'kim',nm:'잠수타 구조물',fS:55,iS:48,lD:3,lT:3,pD:3,pT:3,pG:0,due:'2025-09-10',rl:false},
+  {id:'ME-01',sw:'200',mgr:'lee',nm:'주추진 디젤엔진',fS:92,iS:95,lD:5,lT:6,pD:7,pT:7,pG:0,due:'2025-06-10',rl:false}, 
+  {id:'ME-02',sw:'200',mgr:'lee',nm:'추진 전동기',fS:78,iS:82,lD:4,lT:4,pD:3,pT:5,pG:2,due:'2025-09-01',rl:false},
+  {id:'RG-01',sw:'200',mgr:'lee',nm:'감속기어',fS:85,iS:80,lD:4,lT:5,pD:4,pT:5,pG:1,due:'2025-06-30',rl:false},
+  {id:'SH-01',sw:'200',mgr:'lee',nm:'프로펠러 축계',fS:75,iS:88,lD:3,lT:4,pD:4,pT:6,pG:2,due:'2025-08-20',rl:false},
+  {id:'PR-01',sw:'200',mgr:'kim',nm:'프로펠러',fS:70,iS:75,lD:4,lT:4,pD:3,pT:4,pG:1,due:'2025-09-15',rl:false},
+  {id:'CL-01',sw:'200',mgr:'lee',nm:'클러치 유닛',fS:52,iS:45,lD:3,lT:3,pD:4,pT:4,pG:0,due:'2025-10-20',rl:false},
+  {id:'TB-01',sw:'200',mgr:'kim',nm:'스러스터 베어링',fS:38,iS:42,lD:2,lT:2,pD:3,pT:3,pG:0,due:'2025-12-01',rl:false},
+  {id:'BAT-01',sw:'300',mgr:'lee',nm:'리튬이온 배터리',fS:95,iS:90,lD:5,lT:5,pD:6,pT:6,pG:0,due:'2025-06-15',rl:true},
+  {id:'GEN-01',sw:'300',mgr:'kim',nm:'디젤 발전기',fS:80,iS:75,lD:4,lT:5,pD:5,pT:6,pG:1,due:'2025-08-25',rl:false},
+  {id:'SW-01',sw:'300',mgr:'lee',nm:'배전반 (SWBD)',fS:62,iS:68,lD:3,lT:4,pD:3,pT:4,pG:1,due:'2025-10-10',rl:false},
+  {id:'UPS-01',sw:'300',mgr:'kim',nm:'UPS 장치',fS:48,iS:40,lD:3,lT:3,pD:3,pT:3,pG:0,due:'2025-11-01',rl:false},
+  {id:'CB-01',sw:'300',mgr:'lee',nm:'충전기',fS:35,iS:30,lD:2,lT:2,pD:2,pT:2,pG:0,due:'2026-01-15',rl:false},
+  {id:'TF-01',sw:'300',mgr:'kim',nm:'변압기',fS:42,iS:38,lD:2,lT:2,pD:3,pT:3,pG:0,due:'2025-12-10',rl:false},
+  {id:'CMS-01',sw:'400',mgr:'lee',nm:'전투체계 (CMS)',fS:98,iS:96,lD:2,lT:7,pD:4,pT:6,pG:2,due:'2025-06-05',rl:false},
+  {id:'SON-01',sw:'400',mgr:'kim',nm:'소나체계',fS:90,iS:88,lD:5,lT:5,pD:5,pT:5,pG:0,due:'2025-07-25',rl:true},
+  {id:'RAD-01',sw:'400',mgr:'lee',nm:'레이더 시스템',fS:72,iS:70,lD:4,lT:5,pD:4,pT:5,pG:1,due:'2025-09-20',rl:false},
+  {id:'COM-01',sw:'400',mgr:'kim',nm:'통신장비 세트',fS:55,iS:58,lD:3,lT:3,pD:4,pT:4,pG:0,due:'2025-09-15',rl:false},
+  {id:'NAV-01',sw:'400',mgr:'lee',nm:'항법장치 (INS/GPS)',fS:65,iS:62,lD:3,lT:4,pD:3,pT:4,pG:1,due:'2025-10-05',rl:false},
+  {id:'PER-01',sw:'400',mgr:'kim',nm:'잠망경 시스템',fS:78,iS:80,lD:2,lT:4,pD:3,pT:5,pG:2,due:'2025-08-10',rl:false},
+  {id:'EW-01',sw:'400',mgr:'lee',nm:'전자전 장비 (ESM)',fS:60,iS:64,lD:3,lT:4,pD:3,pT:4,pG:1,due:'2025-10-20',rl:false},
+  {id:'PM-01',sw:'500',mgr:'lee',nm:'유압장치',fS:68,iS:72,lD:3,lT:4,pD:3,pT:5,pG:2,due:'2025-09-05',rl:false},
+  {id:'AC-01',sw:'500',mgr:'kim',nm:'공조장치 (HVAC)',fS:50,iS:55,lD:3,lT:3,pD:4,pT:4,pG:0,due:'2025-09-20',rl:false},
+  {id:'FW-01',sw:'500',mgr:'lee',nm:'청수제조장치',fS:42,iS:38,lD:2,lT:2,pD:3,pT:3,pG:0,due:'2025-11-20',rl:false},
+  {id:'OG-01',sw:'500',mgr:'kim',nm:'산소발생장치',fS:74,iS:70,lD:3,lT:4,pD:3,pT:4,pG:1,due:'2025-09-25',rl:false},
+  {id:'HP-01',sw:'500',mgr:'lee',nm:'고압공기 압축기',fS:58,iS:52,lD:3,lT:3,pD:4,pT:4,pG:0,due:'2025-09-30',rl:false},
+  {id:'SW-02',sw:'500',mgr:'kim',nm:'해수냉각 펌프',fS:32,iS:28,lD:2,lT:2,pD:2,pT:2,pG:0,due:'2026-02-01',rl:false},
+  {id:'BL-01',sw:'500',mgr:'lee',nm:'밸러스트 펌프',fS:45,iS:40,lD:2,lT:2,pD:3,pT:3,pG:0,due:'2025-11-10',rl:false},
+  {id:'BK-01',sw:'600',mgr:'kim',nm:'침대/거주구 가구',fS:15,iS:18,lD:2,lT:2,pD:2,pT:2,pG:0,due:'2026-03-01',rl:false},
+  {id:'IN-01',sw:'600',mgr:'lee',nm:'보온재/방음재',fS:22,iS:25,lD:2,lT:2,pD:2,pT:2,pG:0,due:'2026-02-15',rl:false},
+  {id:'PT-01',sw:'600',mgr:'kim',nm:'도장재',fS:28,iS:20,lD:2,lT:2,pD:2,pT:2,pG:0,due:'2026-01-20',rl:false},
+  {id:'HA-01',sw:'600',mgr:'lee',nm:'해치/도어류',fS:48,iS:52,lD:3,lT:3,pD:3,pT:3,pG:0,due:'2025-10-15',rl:false},
+  {id:'CB-02',sw:'600',mgr:'kim',nm:'케이블 관통부 씰',fS:40,iS:45,lD:2,lT:2,pD:3,pT:3,pG:0,due:'2025-11-05',rl:false},
+  {id:'TRP-01',sw:'700',mgr:'kim',nm:'어뢰발사관',fS:88,iS:92,lD:5,lT:5,pD:5,pT:5,pG:0,due:'2025-06-18',rl:true},
+  {id:'MSL-01',sw:'700',mgr:'lee',nm:'미사일 발사장치',fS:82,iS:86,lD:3,lT:5,pD:4,pT:6,pG:2,due:'2025-08-05',rl:false},
+  {id:'WPN-01',sw:'700',mgr:'kim',nm:'무장적재장치',fS:65,iS:60,lD:3,lT:4,pD:3,pT:4,pG:1,due:'2025-10-15',rl:false},
+  {id:'MN-01',sw:'700',mgr:'lee',nm:'기뢰부설장치',fS:52,iS:48,lD:3,lT:3,pD:3,pT:3,pG:0,due:'2025-10-25',rl:false},
+  {id:'FCS-01',sw:'700',mgr:'kim',nm:'사격통제장치',fS:75,iS:78,lD:3,lT:5,pD:4,pT:5,pG:1,due:'2025-08-30',rl:false},
+  {id:'CM-01',sw:'700',mgr:'lee',nm:'대항수단 (CM)',fS:58,iS:55,lD:3,lT:3,pD:3,pT:3,pG:0,due:'2025-09-25',rl:false}
+];
+EQ.forEach(e=>{e.tot=Math.round((e.fS*C.wF/100+e.iS*C.wI/100)*10)/10;e.gr=grade(e.tot)});
+
+/* ========== STATE ========== */
+let fG=null,sT='',oSw={};
+
+let upF={
+  'ME-01_6':{nm:'Vendor_진동성적서_최종.pdf',dt:'2026-04-30'},
+  'RG-01_5':{nm:'Vendor_치수검사서_RG01.pdf',dt:'2026-04-30'}
+};
+let reqS={'ME-01_6':true, 'RG-01_5':true};
+let apprS={};
+
+let posCmt = {};  // 하위 호환용 — 내부는 posStatus 사용
+let posStatus = {
+  'RG-01_1': {
+    cmt: '협력사 테스트 벤치 한계로 0.5 초과. 실선 탑재 시 허용 오차 내 구동 확인 (첨부 메일 참조)',
+    files: ['RG01_vendor_test_result.pdf'],
+    status: 'pending',
+    thread: [
+      { role:'design', name:'설계담당자 (이책임)', text:'협력사 테스트 벤치 한계로 0.5 초과. 실선 탑재 시 허용 오차 내 구동 확인 (첨부 메일 참조) [첨부: RG01_vendor_test_result.pdf]', time:'08/12 09:23', approve:null },
+    ]
+  }
+};
+
+function getFilteredEQ(){
+  if(!curPersona) return [];
+  if(curPersona.id==='design') return EQ.filter(e=>e.mgr==='lee');
+  return EQ;
+}
+
+function toggleNotifTray(){
+  document.getElementById('notifTray').classList.toggle('minimized');
+}
+
+/* ========== LOGIN ========== */
+function initLogin(){
+  const c=document.getElementById('personas');
+  c.innerHTML=PERSONAS.map(p=>`<div class="persona-btn" data-id="${p.id}" onclick="selPersona('${p.id}')">
+    <div class="p-icon" style="background:${p.color}18;border:2px solid ${p.color}">${p.icon}</div>
+    <div><div class="p-name">${p.name}</div><div class="p-desc">${p.desc}</div></div>
+  </div>`).join('');
+}
+function selPersona(id){
+  curPersona=PERSONAS.find(p=>p.id===id);
+  document.querySelectorAll('.persona-btn').forEach(b=>b.classList.toggle('sel',b.dataset.id===id));
+  document.getElementById('loginBtn').disabled=false;
+}
+function doLogin(){
+  if(!curPersona)return;
+  document.getElementById('loginOv').classList.add('hide');
+  document.getElementById('hdr').style.display='flex';
+  document.getElementById('uName').textContent=curPersona.name;
+  document.getElementById('uRole').textContent=curPersona.desc;
+  buildNav();
+  goHome();
+}
+function doLogout(){
+  curPersona=null;fG=null;sT='';
+  document.getElementById('loginOv').classList.remove('hide');
+  document.getElementById('hdr').style.display='none';
+  document.getElementById('notifTray').classList.remove('show');
+  initLogin();
+}
+function buildNav(){
+  const nav=document.getElementById('hdrNav');
+  let h=`<button class="on" id="nb-d" onclick="goHome()">대시보드</button>`;
+  h+=`<button id="nb-s" onclick="openSim()">시뮬레이터</button><button id="nb-c" onclick="openSettings()">설정</button>`;
+  nav.innerHTML=h;
+}
+
+/* ========== DASHBOARD ========== */
+/* ========== 발주 임박 위험 알림 ========== */
+function getRisk(){
+  const now = new Date();
+  const cut60 = new Date(now.getTime() + 60*24*60*60*1000);
+  const cut30 = new Date(now.getTime() + 30*24*60*60*1000);
+  return EQ.filter(e => {
+    if(!isMaj(e.gr)) return false;          // 1~2등급(주요기자재)만
+    if(e.rl) return false;                   // 이미 발주 승인된 건 제외
+    const blocked = (e.lD < e.lT) || (e.pG > 0);
+    if(!blocked) return false;               // Gate 문제 없으면 제외
+    const d = new Date(e.due);
+    return d <= cut60;                       // 60일 이내 발주 예정만
+  }).sort((a,b) => new Date(a.due)-new Date(b.due))
+    .slice(0, 8);
+}
+function getDDay(due){
+  const now = new Date(); now.setHours(0,0,0,0);
+  const d = new Date(due); d.setHours(0,0,0,0);
+  return Math.round((d-now)/(1000*60*60*24));
+}
+
+function renderDash(){
+  const app=document.getElementById('app');
+  const myEQ = getFilteredEQ();
+  const gc=[0,0,0,0,0];let mC=0;
+  myEQ.forEach(e=>{gc[e.gr-1]++;if(isMaj(e.gr))mC++});
+  const tot=myEQ.length;
+  
+  let llC = 0;
+  myEQ.forEach(e => {
+    let curLD = e.lD;
+    const ll = getLL(e.id);
+    ll.forEach(l => {
+      if(!l.d) {
+        const k = e.id + '_' + l.n;
+        const needsQA = isMaj(e.gr) && l.t === 'proof';
+        if(needsQA) { if(apprS[k]) curLD++; } 
+        else { if(upF[k]) curLD++; }
+      }
+    });
+    if(curLD >= e.lT) llC++;
+  });
+
+  const posC=myEQ.filter(e=>e.pG===0).length;
+  const majTotal=myEQ.filter(e=>isMaj(e.gr)).length;
+  const blocked=myEQ.filter(e=>isMaj(e.gr)&&!e.rl&&(e.lD<e.lT||e.pG>0)).length;
+  const released=myEQ.filter(e=>isMaj(e.gr)&&e.rl).length;
+
+  // Notif Tray Logic
+  const notifTray = document.getElementById('notifTray');
+  if(curPersona && curPersona.alerts && curPersona.alerts.length){
+    let nh = `
+      <div class="notif-tray-hdr" onclick="toggleNotifTray()">
+        <h3>🔔 ${curPersona.id==='design'?'수신 메일 및 증빙 검토 알림':'승인 요청 알림'} <span class="notif-badge">${curPersona.alerts.length}</span></h3>
+        <button class="notif-toggle">▼</button>
+      </div>
+      <div class="notif-tray-body">
+    `;
+    curPersona.alerts.forEach((a,i)=>{
+      const eqId=a.split(':')[0].trim();
+      nh+=`<div class="notif-row" onclick="openDetail('${eqId}')">
+        <div class="notif-icon" style="background:${curPersona.color}18;color:${curPersona.color}">${curPersona.icon}</div>
+        <div class="notif-body"><div class="notif-title">${a}</div><div class="notif-desc">클릭하여 해당 장비 상세화면으로 이동</div></div>
+        <div class="notif-time">방금 전</div>
+      </div>`;
+    });
+    nh += `</div>`;
+    notifTray.innerHTML = nh;
+    notifTray.classList.add('show');
+    notifTray.classList.remove('minimized');
+  } else {
+    notifTray.classList.remove('show');
+  }
+
+  let h='';
+
+  const targetLabel = curPersona.id==='design'?'내 담당 기자재':'전체 관리 기자재';
+  h+=`<div class="stat-row">`;
+  h+=sc('all',targetLabel,tot,'Total');
+  h+=`<div class="major-wrap">`;
+  h+=sc(1,GI[0].l,gc[0],'QC Gate');
+  h+=sc(2,GI[1].l,gc[1],'QC Gate');
+  h+=`</div>`;
+  h+=sc(3,GI[2].l,gc[2],'일반');h+=sc(4,GI[3].l,gc[3],'일반');h+=sc(5,GI[4].l,gc[4],'일반');
+  h+=sc('major','QC Gate 대상',mC,'1~2등급');
+  h+=`</div>`;
+
+  h+=`<div class="metrics">`;
+  h+=mCard('L/L Check 완료율',llC,tot,llC===tot?'var(--ok)':'var(--hw)');
+  h+=mCard('Vendor Data 사양 적합률',posC,tot,posC===tot?'var(--ok)':'var(--hw)');
+  h+=mCard('발주 승인 (Release)',released,majTotal,'var(--rl)');
+  h+=mCard('발주 차단',blocked,majTotal,'var(--dn)');
+  h+=`</div>`;
+
+  // ── 발주 임박 위험 알림 (Claude v6에서 이식) ──
+  const riskItems = getRisk();
+  if(riskItems.length){
+    h+=`<div class="risk-sec">`;
+    h+=`<div class="risk-hdr">`;
+    h+=`<h3>⚠ 발주 임박 위험 기자재</h3>`;
+    h+=`<span class="risk-cnt">${riskItems.length}</span>`;
+    h+=`<span style="font-size:10px;color:var(--sub);margin-left:6px">발주예정 60일 이내 · QC Gate 미통과 항목 존재</span>`;
+    h+=`<span style="margin-left:auto;font-size:10px;color:var(--sub)">클릭하여 상세 검토</span>`;
+    h+=`</div>`;
+    riskItems.forEach(r=>{
+      const dd = getDDay(r.due);
+      const ddCls = dd <= 30 ? 'urgent' : 'warning';
+      const ddLabel = dd <= 0 ? `D+${Math.abs(dd)} 초과` : `D-${dd}`;
+      const llIssue = r.lD < r.lT;
+      const posIssue = r.pG > 0;
+      const issueText = [
+        llIssue ? `L/L ${r.lD}/${r.lT}` : '',
+        posIssue ? `POS 불일치 ${r.pG}건` : ''
+      ].filter(Boolean).join(' · ');
+      h+=`<div class="risk-row" onclick="openDetail('${r.id}')">
+        <span class="risk-dday ${ddCls}">${ddLabel}</span>
+        <span class="gt ${GI[r.gr-1].cls}">${GI[r.gr-1].l}</span>
+        <span style="font-size:11px;font-weight:700;color:var(--sub);min-width:58px;flex-shrink:0">${r.id}</span>
+        <span style="font-size:12px;font-weight:600;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${r.nm}</span>
+        <span style="font-size:10.5px;color:var(--dn);white-space:nowrap">${issueText}</span>
+        <span style="font-size:10px;color:var(--sub);white-space:nowrap;margin-left:4px">발주예정 ${r.due}</span>
+        <span style="color:#ccc;font-size:11px;margin-left:4px">›</span>
+      </div>`;
+    });
+    h+=`</div>`;
+  }
+
+  h+=`<div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">`;
+  h+=`<input type="text" id="sBox" placeholder="기자재명 / Tag 검색..." value="${sT}" oninput="doSearch(this.value)" style="border:1px solid var(--bd);border-radius:var(--r);padding:7px 12px;font:inherit;font-size:12px;width:220px;outline:none">`;
+  if(fG!==null){const fl=fG==='major'?'QC Gate 대상':`${fG}등급`;h+=`<span style="display:inline-flex;align-items:center;gap:4px;background:var(--hw-lt);color:var(--hw);font-size:11px;padding:4px 10px;border-radius:20px;font-weight:600">${fl} <span onclick="setF(null)" style="cursor:pointer;font-weight:700">✕</span></span>`}
+  h+=`<div style="flex:1"></div></div>`;
+
+  Object.keys(SW).sort().forEach(sk=>{
+    let items=myEQ.filter(e=>e.sw===sk);
+    if(fG!==null){if(fG==='major')items=items.filter(e=>isMaj(e.gr));else items=items.filter(e=>e.gr===fG)}
+    if(sT){const s=sT.toLowerCase();items=items.filter(e=>e.nm.toLowerCase().includes(s)||e.id.toLowerCase().includes(s))}
+    if(!items.length)return;
+    const gc2=[0,0,0,0,0];items.forEach(e=>gc2[e.gr-1]++);
+    const op=oSw[sk];
+    h+=`<div class="sw-sec${op?' open':''}" id="sw-${sk}"><div class="sw-hdr" onclick="togSw('${sk}')"><span class="sw-arr">▶</span><span class="sw-title">${SW[sk].f}</span><span class="sw-badges">`;
+    for(let i=0;i<5;i++){if(gc2[i])h+=`<span class="gb ${GI[i].bg}">${GI[i].l}:${gc2[i]}</span>`}
+    h+=`</span><div class="sw-bar">`;const tt=items.length;for(let i=0;i<5;i++){if(gc2[i])h+=`<div style="width:${gc2[i]/tt*100}%;background:${GI[i].c}"></div>`}
+    h+=`</div><span class="sw-cnt">${items.length}건</span></div><div class="sw-body"><div class="tw"><table><thead><tr><th class="cg">등급</th><th class="ct">Tag</th><th class="cn">기자재명</th><th class="cs">F</th><th class="cs">I</th><th class="cto">종합</th><th class="cll">L/L</th><th class="cpo">POS</th><th class="cor">ERP 발주</th><th class="ca">상세</th></tr></thead><tbody>`;
+    items.forEach(e=>{
+      const gi=GI[e.gr-1],mj=isMaj(e.gr);
+      
+      let curLD = e.lD;
+      const ll = getLL(e.id);
+      ll.forEach(l => {
+        if(!l.d) {
+          const k = e.id + '_' + l.n;
+          const needsQA = mj && l.t === 'proof';
+          if(needsQA) { if(apprS[k]) curLD++; } 
+          else { if(upF[k]) curLD++; }
+        }
+      });
+
+      const ls=curLD>=e.lT?'ok':curLD>0?'pg':'ng';
+      const ps=e.pG===0?'ok':'ng';
+      
+      let os = 'na';
+      if(mj) {
+        if(e.rl) os = 'rl';
+        else if(ls==='ok'&&ps==='ok') os = 'ok';
+        else if(ls!=='ng'&&e.pG<=1) os = 'co';
+        else os = 'bl';
+      }
+
+      h+=`<tr class="${mj?'mj':''}"><td class="cg"><span class="gt ${gi.cls}">${gi.l}</span></td><td class="ct">${e.id}</td><td class="cn" title="${e.nm}">${e.nm}</td><td class="cs">${e.fS}</td><td class="cs">${e.iS}</td><td class="cto" style="font-weight:700">${e.tot}</td><td class="cll"><span class="st st-${ls}">${curLD}/${e.lT}${ls==='ok'?' ✓':''}</span></td><td class="cpo"><span class="st ${ps==='ok'?'st-ok':'st-ng'}">${e.pD-e.pG}/${e.pT}${e.pG?' ('+e.pG+'↑)':' ✓'}</span></td><td class="cor">${oTag(os)}</td><td class="ca"><button class="btn btn-xs" onclick="openDetail('${e.id}')">검토</button></td></tr>`;
+    });
+    h+=`</tbody></table></div></div></div>`;
+  });
+  app.innerHTML=h;
+}
+
+function sc(g,lbl,val,sub){
+  const a=fG===g;
+  return`<div class="s-card${a?' on':''}" onclick="setF(${typeof g==='number'?g:g===null?'null':"'"+g+"'"})"><div class="s-lbl">${lbl}</div><div class="s-val" style="color:${g==='major'?'var(--dn)':g==='all'?'var(--hw)':typeof g==='number'?GI[g-1].c:'var(--tx)'}">${val}</div><div class="s-sub">${sub}</div></div>`;
+}
+function mCard(t,v,total,c){const p=total?Math.round(v/total*100):0;return`<div class="m-card"><div class="m-title">${t}</div><div class="m-bar"><div class="m-fill" style="width:${p}%;background:${c}"></div></div><div class="m-val" style="color:${c}">${v}/${total} (${p}%)</div></div>`}
+function oTag(s){if(s==='bl')return`<span class="ob ob-bl">차단 (Block)</span>`;if(s==='co')return`<span class="ob ob-co">조건부</span>`;if(s==='ok')return`<span class="ob ob-ok">승인요청가능</span>`;if(s==='rl')return`<span class="ob ob-rl">발주 승인</span>`;return`<span class="ob ob-na">N/A</span>`}
+function setF(g){fG=(fG===g)?null:g;renderDash()}
+function doSearch(v){sT=v;renderDash();const sb=document.getElementById('sBox');if(sb){sb.focus();sb.setSelectionRange(v.length,v.length)}}
+function togSw(k){oSw[k]=!oSw[k];renderDash()}
+function goHome(){fG=null;sT='';closeDet();document.querySelectorAll('.hdr-nav button').forEach(b=>b.classList.remove('on'));document.getElementById('nb-d')?.classList.add('on');renderDash()}
+
+/* ========== DETAIL ========== */
+function openDetail(id){
+  const e=EQ.find(x=>x.id===id);if(!e)return;
+  const gi=GI[e.gr-1],mj=isMaj(e.gr);
+  const ll=getLL(id),pos=getPOS(id);
+  
+  let curLD = e.lD;
+  ll.forEach(l=>{
+    if(!l.d) {
+      const k=id+'_'+l.n;
+      const needsQA = mj && l.t === 'proof';
+      if(needsQA) {
+        if(apprS[k]) curLD++; 
+      } else {
+        if(upF[k]) curLD++;
+      }
+    }
+  });
+  const lT=e.lT;
+  const pF=pos.filter(p=>p.jd==='FAIL').length,pW=pos.filter(p=>p.jd==='WARN').length,pP=pos.filter(p=>p.jd==='PASS').length;
+  
+  const lo = curLD >= lT;
+  const po = pF === 0;
+
+  let os = 'na';
+  let rT, rC, rBg;
+  
+  if(!mj){
+    os='na'; rT='QC Gate 미적용 (일반발주)'; rC='#9CA3AF'; rBg='#F3F4F6';
+  } else if(e.rl) {
+    os='rl'; rT='발주 승인 완료 (Release)'; rC='var(--rl)'; rBg='var(--rl-bg)';
+  } else if(lo && po) {
+    os='ok'; rT='승인 요청 가능 (해제대기)'; rC='var(--ok)'; rBg='var(--ok-bg)';
+  } else if(!lo && pF>0) {
+    os='bl'; rT='발주 차단 (증빙/데이터 누락)'; rC='var(--dn)'; rBg='var(--dn-bg)';
+  } else {
+    os='co'; rT='조건부 보완 요망'; rC='var(--wn)'; rBg='var(--wn-bg)';
+  }
+
+  let bar=`<button class="btn btn-sm" onclick="closeDet()">← 목록</button><span class="gt ${gi.cls}">${gi.l}</span><h3>${e.id} – ${e.nm}</h3><span style="margin-left:auto;padding:5px 14px;border-radius:var(--r);font-weight:700;font-size:12px;background:${rBg};color:${rC}">${rT}</span>`;
+  
+  if(curPersona&&curPersona.id==='quality' && !e.rl && mj){
+    if(os==='ok'){
+      bar+=`<button class="btn btn-hw btn-sm" onclick="unlockOrder('${id}')" style="margin-left:8px">🔓 최종 발주 승인 (Release)</button>`;
+    } else {
+      bar+=`<button class="btn btn-hw btn-sm" onclick="unlockOrder('${id}')" style="margin-left:8px;background:var(--dn);border-color:var(--dn)">🔓 조건부 발주 승인 (Override)</button>`;
+    }
+  }
+
+  document.getElementById('detBar').innerHTML=bar;
+
+  let h='';
+  h+=`<div class="gf"><div class="gs"><div class="gd ${lo?'gd-ok':curLD>0?'gd-pg':'gd-ng'}">${lo?'✓':curLD+'/'+lT}</div><div class="gl">L/L 증빙 검증</div></div><span class="ga">→</span><div class="gs"><div class="gd ${po?'gd-ok':pW>0&&pF===0?'gd-pg':'gd-ng'}">${po?'✓':pF+'F'}</div><div class="gl">PLM POS-Vendor 비교</div></div><span class="ga">→</span><div class="gs"><div class="gd ${!mj?'gd-na':e.rl?'gd-rl':os==='ok'?'gd-pg':'gd-ng'}">${!mj?'N/A':e.rl?'✓':'!'}</div><div class="gl">ERP 발주 릴리즈</div></div><div class="gr" style="background:${rBg};color:${rC}">${rT}</div></div>`;
+
+  if(!mj) h+=`<div class="ref-ban">ℹ 3~5등급은 일반기자재로 QC Gate 미대상입니다. 설계 자체 승인(Auto-Pass)으로 진행됩니다.</div>`;
+
+  h+=`<div class="tabs"><button class="tb on" onclick="stab(this,'tl')">L/L 체크리스트 (${curLD}/${lT})</button><button class="tb" onclick="stab(this,'tp2')">POS-Vendor Spec 데이터 비교 (${pP}P/${pW}W/${pF}F)</button><button class="tb" onclick="stab(this,'tp3')">📊 위험도 점수 산정 근거</button></div>`;
+
+  h+=`<div class="tp on" id="tl"><div class="proc"><strong>결재 라우팅 프로세스:</strong><br/>- 1~2등급 & 필수 증빙(Proof): <strong>설계 업로드 👉 품질 승인 (Maker-Checker)</strong><br/>- 3~5등급 또는 단순 확인(Check): <strong>설계 업로드/체크 시 자동 통과 (Auto-Pass)</strong></div>${renderLL(id,ll,e)}</div>`;
+  h+=`<div class="tp" id="tp2"><div class="proc"><strong>PLM 연동 데이터:</strong> PLM 시스템에 등록된 설계 장비 사양서 요구치와, Vendor 제출 도면 파싱 데이터를 비교합니다.<br><span style="color:var(--dn);font-weight:600">※ FAIL 항목 발생 시, 설계담당자는 의견을 작성해야 하며 품질부서는 이를 참조하여 조건부 승인할 수 있습니다.</span></div>${renderPOS(id,pos)}</div>`;
+  h+=`<div class="tp" id="tp3"><div class="proc"><strong>위험도 점수 산정 근거:</strong> 이 기자재가 주요기자재로 선정된 이유를 F Score(이력 위험도)와 I Score(원가·납기 영향도) 두 축으로 설명합니다. 점수 구성 요소와 참조 이력 DB를 확인하세요.</div>${renderScore(e)}</div>`;
+
+  document.getElementById('detIn').innerHTML=h;
+  document.getElementById('detW').classList.add('show');
+  document.getElementById('detW').scrollTop=0;
+}
+function closeDet(){document.getElementById('detW').classList.remove('show'); renderDash();}
+function stab(btn,id){btn.closest('.det-in').querySelectorAll('.tb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');btn.closest('.det-in').querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));document.getElementById(id).classList.add('on')}
+
+/* ========== 위험도 점수 근거 탭 ========== */
+function renderScore(e){
+  const fS=e.fS, iS=e.iS;
+  const tot = Math.round(fS*(C.wF/100) + iS*(C.wI/100));
+  const gi = GI[e.gr-1];
+
+  // F Score 역산 — 합계에서 각 요인 비율로 추정 (시뮬레이션용)
+  const fPA  = Math.round(fS * 0.42);   // Punch-A 기여 (≈42%)
+  const fPB  = Math.round(fS * 0.18);   // Punch-B 기여 (≈18%)
+  const fAS  = Math.round(fS * 0.27);   // A/S 클레임 기여 (≈27%)
+  const fRec = fS - fPA - fPB - fAS;    // 반복성·방사청 보고서 등 잔여
+
+  // I Score 역산
+  const iCP  = Math.round(iS * 0.45);   // CP 연결 기여 (≈45%)
+  const iCost= Math.round(iS * 0.32);   // 조달금액 기여 (≈32%)
+  const iMisc= iS - iCP - iCost;        // GE·DGQR·Sole-source 등
+
+  // 등재 판정
+  const isAutoEnroll = iS >= 35 || fS >= 35;
+  const enrollReason = fS >= 35 && iS >= 35
+    ? `F Score ${fS}점 (기준 35↑) · I Score ${iS}점 (기준 35↑) — 두 축 모두 충족`
+    : fS >= 35 ? `F Score ${fS}점 — 이력 위험도 단독 기준 충족 (≥35점)`
+    : `I Score ${iS}점 — 영향도 단독 기준 충족 (≥35점)`;
+
+  // 색상 헬퍼
+  function barColor(v,max){
+    const r=v/max;
+    return r>=0.7?'var(--dn)':r>=0.4?'var(--wn)':'var(--ok)';
+  }
+  function scoreBar(label, val, max, color, sub){
+    const pct=Math.min(Math.round(val/max*100),100);
+    return `<div style="margin-bottom:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+        <span style="font-size:11.5px;color:#374151;font-weight:600">${label}</span>
+        <span style="font-size:12px;font-weight:700;color:${color};font-family:monospace">${val}pt</span>
+      </div>
+      <div style="height:7px;background:#f3f4f6;border-radius:99px;overflow:hidden;margin-bottom:3px">
+        <div style="height:100%;width:${pct}%;background:${color};border-radius:99px;transition:width .5s ease"></div>
+      </div>
+      <div style="font-size:10px;color:#9ca3af">${sub}</div>
+    </div>`;
+  }
+
+  // 이력 참조 테이블 (SWBS 기준 대표 이력)
+  const histMap = {
+    '200':[ ['H-1234','주기관 실링 누설','Punch-A','3건','2.1억','2개 호선 반복'],
+            ['H-2103','베어링 공차 초과','Punch-B','0건','—','단발'] ],
+    '100':[ ['H-1234','선체 외판 용접 결함','Punch-B','1건','0.4억','단발'] ],
+    '300':[ ['H-1234','배터리 BMS 오작동','Punch-A','2건','1.2억','2개 호선'] ],
+    '400':[ ['H-1234','CMS 소프트웨어 오류','Punch-A','4건','3.5억','2개 호선'] ],
+    '500':[ ['H-2103','유압 조향 실린더 누설','Punch-B','2건','0.6억','단발'] ],
+    '600':[ ],
+    '700':[ ['H-1234','어뢰발사관 작동 불량','Punch-A','2건','1.8억','2개 호선'] ],
+  };
+  const hist = histMap[e.sw] || [];
+
+  let h = '';
+  h += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px">`;
+
+  // ── F Score 카드 ──
+  h += `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+    <div style="padding:10px 14px;background:#fef2f2;border-bottom:1px solid #fecaca;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--dn);letter-spacing:.06em;text-transform:uppercase;font-family:monospace">Axis 1 — F Score</div>
+        <div style="font-size:10px;color:#6b7280;margin-top:1px">L/L 파싱 기반 이력 위험도</div>
+      </div>
+      <div style="font-size:28px;font-weight:900;color:${barColor(fS,100)};font-family:monospace;line-height:1">${fS}<span style="font-size:13px;color:#9ca3af">/100</span></div>
+    </div>
+    <div style="padding:12px 14px">
+      ${scoreBar('Punch-A 발생 이력', fPA, 40, 'var(--dn)', `추정 ${Math.round(fPA/3)}건 × 3.0pt · 상한 30pt`)}
+      ${scoreBar('Punch-B 발생 이력', fPB, 20, 'var(--wn)', `추정 ${Math.round(fPB)}건 × 1.0pt · 상한 15pt`)}
+      ${scoreBar('A/S 클레임 · 처리비용', fAS, 30, '#f97316', `클레임 이력 + 방사청 불만족 보고서 포함`)}
+      ${scoreBar('반복성 보정 (Recurrence)', fRec, 15, '#8b5cf6', `동일 계열 반복 호선 수 × 보정 계수`)}
+    </div>
+  </div>`;
+
+  // ── I Score 카드 ──
+  h += `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+    <div style="padding:10px 14px;background:#fff7ed;border-bottom:1px solid #fed7aa;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--hw);letter-spacing:.06em;text-transform:uppercase;font-family:monospace">Axis 2 — I Score</div>
+        <div style="font-size:10px;color:#6b7280;margin-top:1px">원가·납기 영향도</div>
+      </div>
+      <div style="font-size:28px;font-weight:900;color:${barColor(iS,100)};font-family:monospace;line-height:1">${iS}<span style="font-size:13px;color:#9ca3af">/100</span></div>
+    </div>
+    <div style="padding:12px 14px">
+      ${scoreBar('CP 연결 (납기 임팩트)', iCP, 40, 'var(--dn)', iCP>=18?'Hard CP 직결 — D/L 직접 영향':iCP>=9?'Soft CP — 여유 공기 감소':'Non-CP — 독립 진행 가능')}
+      ${scoreBar('조달 금액 규모', iCost, 25, 'var(--wn)', iCost>=16?'전략 기자재 (30억↑)':iCost>=10?'고액 기자재 (5억↑)':'일반 기자재')}
+      ${scoreBar('검사 등급 · 공급 구조', iMisc, 15, '#8b5cf6', 'GE 관급품 +6 · DGQR +4 · Sole-source +5')}
+    </div>
+  </div>`;
+
+  h += `</div>`; // grid
+
+  // ── 최종 판정 배너 ──
+  const totColor = tot>=80?'var(--dn)':tot>=60?'var(--wn)':'var(--ok)';
+  const totBg    = tot>=80?'#fef2f2':tot>=60?'#fffbeb':'#f0fdf4';
+  h += `<div style="background:${totBg};border:1.5px solid ${totColor};border-radius:8px;padding:12px 16px;margin-bottom:14px;display:flex;align-items:center;gap:14px">
+    <div style="text-align:center;min-width:64px">
+      <div style="font-size:30px;font-weight:900;color:${totColor};font-family:monospace;line-height:1">${tot}</div>
+      <div style="font-size:9px;color:#6b7280;margin-top:2px">최종 점수</div>
+    </div>
+    <div style="flex:1">
+      <div style="font-size:12px;font-weight:700;color:#374151;margin-bottom:4px">
+        산정 공식: F(${fS}) × ${C.wF}% + I(${iS}) × ${C.wI}% = <span style="color:${totColor}">${tot}점</span>
+        &nbsp;<span class="gt ${gi.cls}">${gi.l} · ${gi.d}</span>
+      </div>
+      <div style="font-size:11px;color:#6b7280">
+        등재 판정: ${enrollReason}
+      </div>
+      <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">
+        <span style="font-size:10px;background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:2px 8px;color:#374151">F 가중치 ${C.wF}%</span>
+        <span style="font-size:10px;background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:2px 8px;color:#374151">I 가중치 ${C.wI}%</span>
+        <span style="font-size:10px;background:#fff;border:1px solid #e5e7eb;border-radius:4px;padding:2px 8px;color:#374151">등재 임계값 50점 · GE/DGQR 자동등재</span>
+      </div>
+    </div>
+  </div>`;
+
+  // ── 참조 이력 DB ──
+  h += `<div style="background:#fff;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;margin-bottom:14px">
+    <div style="padding:8px 14px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:center;gap:8px">
+      <span style="font-size:11px;font-weight:700;color:#374151;font-family:monospace;text-transform:uppercase;letter-spacing:.06em">참조 이력 DB</span>
+      <span style="font-size:10px;color:#9ca3af">동일 SWBS 계통 (${SW[e.sw]?.n||e.sw}) 과거 L/L 이력 · F Score 산정 기반</span>
+      <span style="margin-left:auto;font-size:10px;color:#9ca3af">Phase 1 이후 PM Portal API 자동 집계</span>
+    </div>`;
+
+  if(hist.length){
+    h += `<table style="width:100%;border-collapse:collapse;font-size:11px">
+      <thead><tr style="background:#f9fafb">
+        <th style="padding:6px 10px;text-align:left;color:#6b7280;font-weight:700;border-bottom:1px solid #e5e7eb">호선</th>
+        <th style="padding:6px 10px;text-align:left;color:#6b7280;font-weight:700;border-bottom:1px solid #e5e7eb">사건 요약</th>
+        <th style="padding:6px 10px;text-align:left;color:#6b7280;font-weight:700;border-bottom:1px solid #e5e7eb">결함 유형</th>
+        <th style="padding:6px 10px;text-align:left;color:#6b7280;font-weight:700;border-bottom:1px solid #e5e7eb">Punch-A</th>
+        <th style="padding:6px 10px;text-align:left;color:#6b7280;font-weight:700;border-bottom:1px solid #e5e7eb">처리비용</th>
+        <th style="padding:6px 10px;text-align:left;color:#6b7280;font-weight:700;border-bottom:1px solid #e5e7eb">반복성</th>
+      </tr></thead><tbody>`;
+    hist.forEach((r,i)=>{
+      const bg = i%2===0?'#fff':'#f9fafb';
+      const recurBg = r[5].includes('반복')?'#fef2f2':'#f3f4f6';
+      const recurC  = r[5].includes('반복')?'var(--dn)':'#6b7280';
+      h+=`<tr style="background:${bg}">
+        <td style="padding:7px 10px;font-family:monospace;color:#6b7280;border-bottom:1px solid #f3f4f6">${r[0]}</td>
+        <td style="padding:7px 10px;font-weight:600;border-bottom:1px solid #f3f4f6">${r[1]}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #f3f4f6"><span style="background:#fef2f2;color:var(--dn);font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">${r[2]}</span></td>
+        <td style="padding:7px 10px;font-weight:700;color:var(--dn);border-bottom:1px solid #f3f4f6">${r[3]}</td>
+        <td style="padding:7px 10px;color:#374151;border-bottom:1px solid #f3f4f6">${r[4]}</td>
+        <td style="padding:7px 10px;border-bottom:1px solid #f3f4f6"><span style="background:${recurBg};color:${recurC};font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">${r[5]}</span></td>
+      </tr>`;
+    });
+    h+=`</tbody></table>`;
+  } else {
+    h+=`<div style="padding:16px;text-align:center;color:#9ca3af;font-size:11.5px">이 SWBS 계통의 등록된 이력 데이터 없음 — Phase 1 이후 PM Portal에서 자동 집계됩니다</div>`;
+  }
+  h+=`</div>`;
+
+  // ── 가중치 안내 ──
+  h+=`<div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:8px;padding:10px 14px;font-size:11px;color:#1e40af">
+    <span style="font-weight:700">💡 가중치 조정:</span>
+    현재 F:I = ${C.wF}:${C.wI} 적용 중. 헤더의 <strong>설정</strong> 버튼에서 가중치·등급 임계값을 변경하면 전체 목록 점수가 즉시 재산정됩니다.
+  </div>`;
+
+  return h;
+}
+
+function unlockOrder(id){
+  if(!confirm("해당 장비의 발주 락을 해제(Release) 하시겠습니까?")) return;
+  const e=EQ.find(x=>x.id===id);if(!e)return;
+  e.rl = true;
+  toast(`🔓 ${id} QC Gate 해제 완료 – ERP 발주 릴리즈 처리됨`);
+  openDetail(id);
+}
+
+/* ========== LL ========== */
+function renderLL(eid,ll,e){
+  let h=`<table class="ll"><thead><tr><th class="lno">No</th><th class="ltp">유형</th><th class="lca">분류</th><th class="lct">PM Portal L/L 점검 내용</th><th class="lsr">결재 로직</th><th class="lev">설계 실행</th><th class="lat">품질 확인</th><th class="lst">상태</th></tr></thead><tbody>`;
+  ll.forEach(it=>{
+    const k=eid+'_'+it.n, uf=upF[k], rq=reqS[k], ap=apprS[k];
+    const isMajor = isMaj(e.gr);
+    const needsQA = isMajor && it.t === 'proof';
+    const evidenceOk = it.ev || ap || (!needsQA && uf); 
+    const isComplete = it.d || evidenceOk;
+
+    h+=`<tr><td class="lno">${it.n}</td>`;
+    h+=`<td class="ltp">${it.t==='proof'?'<span class="evt ev-p">증빙</span>':'<span class="evt ev-c">확인</span>'}</td>`;
+    h+=`<td class="lca">${it.c}</td>`;
+    h+=`<td class="lct">${it.ct}</td>`;
+    h+=`<td class="lsr"><span style="font-size:10px;color:var(--sub);font-weight:600">${needsQA?'품질 승인':'Auto-Pass'}</span></td>`;
+    
+    h+=`<td class="lev">`;
+    if(it.ev){
+      h+=`<div class="ud">📎 ${it.ev}</div><div style="font-size:9.5px;color:var(--sub)">${it.ed} 완료됨</div>`;
+    }else if(uf){
+      h+=`<div class="ud">${it.t==='proof'?'📎 '+uf.nm:'✔ 확인완료'}</div><div style="font-size:9.5px;color:var(--sub)">${uf.dt} 업로드</div>`;
+      if(needsQA && !ap && curPersona.id==='design'){
+        h+=`<button class="btn btn-xs btn-hw" style="margin-top:4px" onclick="reqAppr('${k}')">${rq?'승인 대기중':'품질에 승인요청'}</button>`;
+      }
+    }else if(curPersona.id==='design'){
+      h+=`<button class="uz" onclick="simUp('${k}',this, '${it.t}')">${it.t==='proof'?'📥 증빙 업로드':'✔ 항목 확인완료'}</button>`;
+    }else{
+      h+=`<span style="font-size:10.5px;color:var(--wn)">미진행 (설계팀 대기)</span>`;
+    }
+    h+=`</td>`;
+    
+    h+=`<td class="lat">`;
+    if(!needsQA){
+      h+=`<span style="font-size:10px;color:#bbb">해당 없음</span>`; 
+    }else{
+      if(it.es==='승인' || ap){
+        h+=`<div style="font-size:10.5px;font-weight:700;color:var(--ok)">✓ 승인 완료</div>`;
+      }else if((uf&&rq) && curPersona.id==='quality'){
+        h+=`<button class="btn btn-xs btn-hw" onclick="doAppr('${k}','${eid}')">✅ 증빙 확인 및 승인</button>`;
+      }else{
+        h+=`<span style="font-size:10px;color:#bbb">-</span>`;
+      }
+    }
+    h+=`</td>`;
+
+    h+=`<td class="lst">${isComplete?'<span class="st st-ok">완료</span>':'<span class="st st-ng">미완료</span>'}</td></tr>`;
+  });
+  h+=`</tbody></table>`;return h;
+}
+function simUp(k,el,t){
+  el.outerHTML='<span style="color:var(--wn);font-size:11px">처리중...</span>';
+  setTimeout(()=>{
+    const nm= t==='proof' ? 'Vendor_제출자료_'+k+'.pdf' : '확인완료';
+    const dt=new Date().toISOString().slice(0,10);
+    upF[k]={nm,dt};
+    toast(t==='proof' ? '증빙 파일이 업로드 되었습니다.' : '확인 처리 되었습니다.');
+    openDetail(k.split('_')[0]);
+  },500);
+}
+function reqAppr(k){
+  reqS[k]=true; toast('품질팀에 해제 승인을 요청했습니다.'); openDetail(k.split('_')[0]);
+}
+function doAppr(k,eid){
+  apprS[k]=true; toast('증빙이 승인되어 해당 항목이 패스되었습니다.'); openDetail(eid);
+}
+
+/* ========== POS ========== */
+function renderPOS(eid, pos){
+  let h=`<table class="pos"><thead><tr>
+    <th style="width:28px;text-align:center">No</th>
+    <th style="width:80px">구분 (조항)</th>
+    <th style="min-width:120px">PLM 정격 요구치</th>
+    <th style="width:40px;text-align:center">단위</th>
+    <th style="width:60px;text-align:center">설계 기준</th>
+    <th style="width:60px;text-align:center">허용범위</th>
+    <th style="width:60px;text-align:center">Vendor 제출</th>
+    <th style="width:60px;text-align:center">설계편차</th>
+    <th style="width:48px;text-align:center">판정</th>
+    <th style="min-width:160px">설계 의견 / 처리 현황</th>
+  </tr></thead><tbody>`;
+
+  pos.forEach((p,i)=>{
+    const k = eid + '_' + i;
+    const st = posStatus[k] || {cmt:'', files:[], thread:[], status:'pending'};
+    const rc = p.jd==='FAIL'?'pfail':p.jd==='WARN'?'pwarn':'';
+    const jc = p.jd==='FAIL'?'jng':p.jd==='WARN'?'jwn':'jok';
+
+    let cmtHtml = '-';
+    if(p.jd !== 'PASS'){
+      if(st.status === 'approved'){
+        cmtHtml = `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="background:#dcfce7;color:#15803d;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">✓ 조건부 승인</span>
+          <button class="btn btn-xs" style="font-size:10px" onclick="openPosModal('${eid}',${i})">상세보기</button>
+        </div>`;
+      } else if(st.status === 'rejected'){
+        cmtHtml = `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <span style="background:#fef2f2;color:var(--dn);font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">✕ 반려</span>
+          <button class="btn btn-xs" style="font-size:10px" onclick="openPosModal('${eid}',${i})">재작성</button>
+        </div>`;
+      } else if(st.cmt){
+        const waiting = curPersona.id === 'quality';
+        cmtHtml = `<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          ${waiting ? `<span style="background:#fffbeb;color:var(--wn);font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">검토 대기</span>` : `<span style="background:#eff6ff;color:#2563eb;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">해명 제출됨</span>`}
+          <button class="btn btn-xs" style="font-size:10px;${waiting?'background:var(--hw);color:#fff':''}" onclick="openPosModal('${eid}',${i})">${waiting?'검토/승인':'수정·상세'}</button>
+        </div>`;
+      } else {
+        if(curPersona.id === 'design'){
+          cmtHtml = `<button class="btn btn-xs" style="background:var(--dn);color:#fff;font-size:10px;padding:3px 10px" onclick="openPosModal('${eid}',${i})">✏ 해명 작성</button>`;
+        } else {
+          cmtHtml = `<span style="font-size:10px;color:var(--sub)">해명 미입력</span>`;
+        }
+      }
+    }
+
+    h+=`<tr class="${rc}">
+      <td style="text-align:center">${i+1}</td>
+      <td>${p.cl}</td>
+      <td style="font-weight:600">${p.rq}</td>
+      <td style="text-align:center">${p.u}</td>
+      <td style="text-align:center;color:var(--hw);font-weight:600">${p.st}</td>
+      <td style="text-align:center">${p.rn}</td>
+      <td style="text-align:center;font-weight:700">${p.vd}</td>
+      <td style="text-align:center;color:${p.dv.includes('초과')?'var(--dn)':p.dv.includes('허용')?'var(--wn)':'var(--sub)'}">${p.dv}</td>
+      <td style="text-align:center"><span class="${jc}">${p.jd}</span></td>
+      <td>${cmtHtml}</td>
+    </tr>`;
+  });
+  h+=`</tbody></table>`;
+  return h;
+}
+
+/* POS 해명 모달 */
+let _posModalEid='', _posModalIdx=0;
+
+function openPosModal(eid, idx){
+  _posModalEid=eid; _posModalIdx=idx;
+  const eq = EQ.find(e=>e.id===eid);
+  const pos = (eq&&eq.pos)||[];
+  const p = pos[idx]||{};
+  const k = eid+'_'+idx;
+  const st = posStatus[k] || {cmt:'',files:[],thread:[],status:'pending'};
+
+  const isDesign  = curPersona.id==='design';
+  const isQuality = curPersona.id==='quality';
+  const canEdit   = isDesign && st.status !== 'approved';
+  const canReview = isQuality && st.cmt;
+
+  // 상태 배지
+  const statusBadge = st.status==='approved'
+    ? `<span style="background:#dcfce7;color:#15803d;font-size:11px;font-weight:700;padding:2px 10px;border-radius:4px">✓ 조건부 승인</span>`
+    : st.status==='rejected'
+    ? `<span style="background:#fef2f2;color:var(--dn);font-size:11px;font-weight:700;padding:2px 10px;border-radius:4px">✕ 반려</span>`
+    : st.cmt
+    ? `<span style="background:#fffbeb;color:var(--wn);font-size:11px;font-weight:700;padding:2px 10px;border-radius:4px">⏳ 품질 검토 대기</span>`
+    : `<span style="background:#f3f4f6;color:#6b7280;font-size:11px;font-weight:700;padding:2px 10px;border-radius:4px">미처리</span>`;
+
+  let html = `
+  <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;gap:10px">
+    <div>
+      <div style="font-size:13px;font-weight:700;color:#111827;margin-bottom:4px">${p.rq||'항목'} <span style="font-size:11px;color:#6b7280">(${p.cl||''})</span></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <span style="font-size:11px;color:#374151">기준: <b>${p.st||''} ${p.u||''}</b></span>
+        <span style="font-size:11px;color:#374151">Vendor: <b>${p.vd||''}</b></span>
+        <span style="font-size:11px;color:#374151">편차: <b style="color:var(--dn)">${p.dv||''}</b></span>
+        <span class="${p.jd==='FAIL'?'jng':p.jd==='WARN'?'jwn':'jok'}" style="font-size:11px">${p.jd||''}</span>
+        ${statusBadge}
+      </div>
+    </div>
+    <button onclick="closePosModal()" style="background:none;border:none;font-size:18px;color:#9ca3af;cursor:pointer;flex-shrink:0">✕</button>
+  </div>`;
+
+  // ── 설계 해명 입력 영역 ──
+  html += `<div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;margin-bottom:12px">
+    <div style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;font-size:11px;font-weight:700;color:#374151;display:flex;align-items:center;gap:6px">
+      📐 설계 해명 <span style="font-weight:400;color:#6b7280">${curPersona.id==='design'?'(작성 권한: 설계담당자)':'(설계담당자 작성)'}</span>
+    </div>
+    <div style="padding:10px 12px">`;
+
+  if(canEdit){
+    html += `<textarea id="pos-cmt-input" style="width:100%;height:90px;border:1px solid #d1d5db;border-radius:6px;padding:8px 10px;font-size:12px;font-family:inherit;resize:vertical;outline:none;box-sizing:border-box" placeholder="FAIL/WARN 사유를 구체적으로 작성하세요. (예: 현재 Vendor 제출값은 기준 초과이나, 실 운전 조건 기준 허용 범위 내 재시험 예정)">${st.cmt}</textarea>
+      <div style="margin-top:8px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <label style="font-size:11px;color:#374151;font-weight:600">첨부파일</label>
+        <input type="file" id="pos-file-input" multiple style="font-size:11px" onchange="handlePosFile(this)">
+      </div>`;
+
+    // 기존 첨부 목록
+    if(st.files && st.files.length){
+      html += `<div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap">`;
+      st.files.forEach((f,fi)=>{
+        html += `<span style="display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 8px;font-size:10.5px;color:#1d4ed8">
+          📎 ${f} <span onclick="removePosFile(${fi})" style="cursor:pointer;color:#9ca3af;font-size:12px">×</span>
+        </span>`;
+      });
+      html += `</div>`;
+    }
+
+    html += `<div style="margin-top:10px;display:flex;justify-content:flex-end;gap:8px">
+      <button class="btn" onclick="closePosModal()" style="font-size:12px">취소</button>
+      <button class="btn btn-hw" onclick="submitPosComment()" style="font-size:12px;background:var(--hw);color:#fff">해명 제출</button>
+    </div>`;
+  } else {
+    // 읽기 전용
+    html += `<div style="font-size:12px;color:#374151;background:${st.status==='approved'?'#f0fdf4':st.status==='rejected'?'#fef2f2':'#fffbeb'};border-radius:6px;padding:10px 12px;min-height:48px;white-space:pre-wrap">${st.cmt || '(해명 미입력)'}</div>`;
+    if(st.files && st.files.length){
+      html += `<div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap">`;
+      st.files.forEach(f=>{
+        html += `<span style="display:inline-flex;align-items:center;gap:4px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:4px;padding:2px 8px;font-size:10.5px;color:#1d4ed8">📎 ${f}</span>`;
+      });
+      html += `</div>`;
+    }
+  }
+  html += `</div></div>`;
+
+  // ── 댓글 스레드 ──
+  html += `<div style="border:1px solid #e5e7eb;border-radius:8px;overflow:hidden;margin-bottom:12px">
+    <div style="padding:8px 12px;background:#f9fafb;border-bottom:1px solid #e5e7eb;font-size:11px;font-weight:700;color:#374151">
+      💬 협의 이력 <span style="font-weight:400;color:#9ca3af">(설계 ↔ 품질 실시간 소통)</span>
+    </div>`;
+
+  if(st.thread && st.thread.length){
+    st.thread.forEach(msg=>{
+      const isMe = msg.role === curPersona.id;
+      const bg   = msg.role==='quality'?'#f0fdf4':'#eff6ff';
+      const nameColor = msg.role==='quality'?'#15803d':'#1d4ed8';
+      html += `<div style="display:flex;gap:8px;padding:8px 12px;border-bottom:1px solid #f3f4f6;${isMe?'flex-direction:row-reverse':''}">
+        <div style="width:26px;height:26px;border-radius:50%;background:${nameColor};color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">${msg.role==='quality'?'품':'설'}</div>
+        <div style="flex:1;max-width:80%">
+          <div style="font-size:10px;color:#9ca3af;margin-bottom:2px;${isMe?'text-align:right':''}">${msg.name} · ${msg.time}</div>
+          <div style="font-size:12px;background:${bg};border-radius:6px;padding:6px 10px;color:#374151">${msg.text}</div>
+          ${msg.approve?`<div style="margin-top:4px;${isMe?'text-align:right':''}"><span style="background:#dcfce7;color:#15803d;font-size:10px;font-weight:700;padding:1px 7px;border-radius:4px">${msg.approve==='approved'?'✓ 조건부 승인':'✕ 반려'}</span></div>`:''}
+        </div>
+      </div>`;
+    });
+  } else {
+    html += `<div style="padding:14px;text-align:center;color:#9ca3af;font-size:11.5px">아직 협의 내용이 없습니다.</div>`;
+  }
+
+  // 댓글 입력
+  html += `<div style="padding:8px 10px;background:#f9fafb;border-top:1px solid #e5e7eb;display:flex;gap:6px;align-items:center">
+    <div style="width:24px;height:24px;border-radius:50%;background:${curPersona.color||'#374151'};color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0">${curPersona.id==='quality'?'품':'설'}</div>
+    <input id="pos-thread-input" type="text" placeholder="의견을 입력하세요..." style="flex:1;border:1px solid #d1d5db;border-radius:5px;padding:5px 9px;font-size:11.5px;font-family:inherit;outline:none">
+    <button class="btn btn-xs" onclick="addPosThread()" style="white-space:nowrap;font-size:11px">등록</button>
+  </div>
+  </div>`;
+
+  // ── 품질 담당자 승인/반려 버튼 ──
+  if(canReview && st.status === 'pending'){
+    html += `<div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:8px;padding:12px 14px">
+      <div style="font-size:11.5px;font-weight:700;color:#15803d;margin-bottom:8px">🔍 품질 담당자 검토 — 설계 해명을 확인 후 처리하세요.</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="posDecision('approved')" style="background:#16a34a;color:#fff;flex:1;font-size:12px;padding:7px">✓ 조건부 승인</button>
+        <button class="btn" onclick="posDecision('rejected')" style="background:var(--dn);color:#fff;flex:1;font-size:12px;padding:7px">✕ 반려 (재작성 요청)</button>
+      </div>
+    </div>`;
+  }
+
+  // 모달 표시
+  let modal = document.getElementById('pos-modal');
+  if(!modal){
+    modal = document.createElement('div');
+    modal.id = 'pos-modal';
+    modal.style.cssText = 'position:fixed;inset:0;background:rgba(17,24,39,.45);z-index:9000;display:flex;align-items:center;justify-content:center;padding:16px';
+    modal.onclick = function(e){ if(e.target===modal) closePosModal(); };
+    document.body.appendChild(modal);
+  }
+  modal.innerHTML = `<div style="background:#fff;border-radius:10px;width:100%;max-width:580px;max-height:88vh;overflow-y:auto;padding:18px 20px;box-shadow:0 20px 60px rgba(0,0,0,.22)">${html}</div>`;
+  modal.style.display = 'flex';
+}
+
+function closePosModal(){
+  const m = document.getElementById('pos-modal');
+  if(m) m.style.display='none';
+}
+
+function handlePosFile(input){
+  const k = _posModalEid+'_'+_posModalIdx;
+  if(!posStatus[k]) posStatus[k]={cmt:'',files:[],thread:[],status:'pending'};
+  Array.from(input.files).forEach(f=>{ posStatus[k].files.push(f.name); });
+  // 파일 리스트 미리보기 갱신
+  const existing = document.querySelector('#pos-modal [id="pos-file-input"]');
+  if(existing) openPosModal(_posModalEid, _posModalIdx); // 재렌더
+}
+
+function removePosFile(fi){
+  const k = _posModalEid+'_'+_posModalIdx;
+  if(posStatus[k]&&posStatus[k].files) posStatus[k].files.splice(fi,1);
+  openPosModal(_posModalEid, _posModalIdx);
+}
+
+function submitPosComment(){
+  const k = _posModalEid+'_'+_posModalIdx;
+  const txt = document.getElementById('pos-cmt-input').value.trim();
+  if(!txt){ toast('해명 내용을 입력해주세요.'); return; }
+
+  // 파일 수집
+  const fileInput = document.getElementById('pos-file-input');
+  const newFiles = fileInput ? Array.from(fileInput.files).map(f=>f.name) : [];
+
+  if(!posStatus[k]) posStatus[k]={cmt:'',files:[],thread:[],status:'pending'};
+  posStatus[k].cmt = txt;
+  posStatus[k].files = [...(posStatus[k].files||[]), ...newFiles];
+  posStatus[k].status = 'pending';
+
+  // 스레드에 자동 기록
+  const now = new Date().toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+  posStatus[k].thread.push({
+    role: curPersona.id,
+    name: curPersona.name,
+    text: txt + (newFiles.length ? ` [첨부: ${newFiles.join(', ')}]` : ''),
+    time: now,
+    approve: null,
+  });
+
+  toast('해명이 제출되었습니다. 품질담당자에게 검토 요청이 전송됩니다.');
+  closePosModal();
+  // 상세 패널 갱신
+  const eq = EQ.find(e=>e.id===_posModalEid);
+  if(eq) openDetail(_posModalEid);
+}
+
+function addPosThread(){
+  const k = _posModalEid+'_'+_posModalIdx;
+  const inp = document.getElementById('pos-thread-input');
+  const txt = inp ? inp.value.trim() : '';
+  if(!txt) return;
+
+  if(!posStatus[k]) posStatus[k]={cmt:'',files:[],thread:[],status:'pending'};
+  const now = new Date().toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+  posStatus[k].thread.push({
+    role: curPersona.id,
+    name: curPersona.name,
+    text: txt,
+    time: now,
+    approve: null,
+  });
+  openPosModal(_posModalEid, _posModalIdx); // 재렌더로 갱신
+}
+
+function posDecision(decision){
+  const k = _posModalEid+'_'+_posModalIdx;
+  if(!posStatus[k]) return;
+
+  const inp = document.getElementById('pos-thread-input');
+  const reviewNote = inp ? inp.value.trim() : '';
+
+  posStatus[k].status = decision;
+  const now = new Date().toLocaleString('ko-KR',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false});
+  posStatus[k].thread.push({
+    role: curPersona.id,
+    name: curPersona.name,
+    text: reviewNote || (decision==='approved'?'검토 완료. 조건부 승인 처리합니다.':'검토 결과 반려합니다. 해명을 재작성해주세요.'),
+    time: now,
+    approve: decision,
+  });
+
+  const msg = decision==='approved'?'조건부 승인 처리되었습니다.':'반려 처리되었습니다. 설계담당자에게 재작성 요청이 전송됩니다.';
+  toast(msg);
+  closePosModal();
+  const eq = EQ.find(e=>e.id===_posModalEid);
+  if(eq) openDetail(_posModalEid);
+}
+
+/* 하위 호환 — 구 savePcmt */
+function savePcmt(k){
+  const v = document.getElementById('pcmt_'+k);
+  if(v){ if(!posStatus[k]) posStatus[k]={cmt:'',files:[],thread:[],status:'pending'}; posStatus[k].cmt=v.value.trim(); }
+  toast('설계 의견이 저장되었습니다.');
+}
+
+/* ========== SETTINGS & SIMULATOR ========== */
+function openSettings(){
+  closePanel();
+  let h='';
+  h+=`<div class="fld"><label>빈도(F) : 영향도(I)</label><div class="fr"><input type="range" id="s-wF" min="10" max="90" step="5" value="${C.wF}" oninput="syncW()"><span class="fv" id="s-wF-v">${C.wF}:${C.wI}</span></div></div>`;
+  h+=`<div class="fs">── F 내부 가중치 ──</div>`;
+  h+=wf('s-fS','SCAR',C.fS);h+=wf('s-fP','PPM',C.fP);h+=wf('s-fN','불합격',C.fN);
+  h+=`<div class="fs">── I 내부 가중치 ──</div>`;
+  h+=wf('s-iS','일정',C.iS);h+=wf('s-iC','비용',C.iC);h+=wf('s-iQ','품질',C.iQ);
+  h+=`<div class="fs">── 등급 기준점 (Threshold) ──</div>`;
+  h+=tf('s-t0','1등급↑',C.th[0]);h+=tf('s-t1','2등급↑',C.th[1]);h+=tf('s-t2','3등급↑',C.th[2]);h+=tf('s-t3','4등급↑',C.th[3]);
+  h+=`<div style="display:flex;gap:8px;margin-top:16px"><button class="btn btn-hw" onclick="applySt()">적용</button><button class="btn" onclick="resetSt()">기본값 복원</button></div>`;
+  document.getElementById('setB').innerHTML=h;
+  document.getElementById('pov').classList.add('show');document.getElementById('setP').classList.add('show');
+}
+function wf(id,l,v){return`<div class="fld"><label>${l}</label><div class="fr"><input type="range" id="${id}" min="0" max="100" step="5" value="${v}" oninput="document.getElementById('${id}-v').textContent=this.value+'%'"><span class="fv" id="${id}-v">${v}%</span></div></div>`}
+function tf(id,l,v){return`<div class="fld"><label>${l}</label><div class="fr"><input type="range" id="${id}" min="0" max="100" step="5" value="${v}" oninput="document.getElementById('${id}-v').textContent=this.value"><span class="fv" id="${id}-v">${v}</span></div></div>`}
+function syncW(){const v=+document.getElementById('s-wF').value;document.getElementById('s-wF-v').textContent=v+':'+(100-v)}
+function applySt(){
+  C.wF=+document.getElementById('s-wF').value;C.wI=100-C.wF;
+  C.fS=+document.getElementById('s-fS').value;C.fP=+document.getElementById('s-fP').value;C.fN=+document.getElementById('s-fN').value;
+  C.iS=+document.getElementById('s-iS').value;C.iC=+document.getElementById('s-iC').value;C.iQ=+document.getElementById('s-iQ').value;
+  C.th=[+document.getElementById('s-t0').value,+document.getElementById('s-t1').value,+document.getElementById('s-t2').value,+document.getElementById('s-t3').value];
+  EQ.forEach(e=>{e.tot=Math.round((e.fS*C.wF/100+e.iS*C.wI/100)*10)/10;e.gr=grade(e.tot)});
+  closePanel();renderDash();toast('설정 적용 완료');
+}
+function resetSt(){C.wF=40;C.wI=60;C.fS=30;C.fP=30;C.fN=40;C.iS=30;C.iC=30;C.iQ=40;C.th=[80,60,40,20];openSettings();toast('기본값 복원')}
+
+function openSim(){
+  closePanel();let h='';
+  h+=`<div class="fs">── 빈도(F) 점수 ──</div>`;
+  h+=ss('sm-sc','SCAR (0~10)',5,0,10,1);h+=ss('sm-pp','PPM (0~10000)',3000,0,10000,100);h+=ss('sm-nc','불합격 (0~20)',8,0,20,1);h+=ss('sm-fa','수동조정',0,-20,20,1);
+  h+=`<div class="fs">── 영향도(I) 점수 ──</div>`;
+  h+=ss('sm-sd','일정 (0~100)',70,0,100,5);h+=ss('sm-co','비용 (0~100)',60,0,100,5);h+=ss('sm-qu','품질 (0~100)',80,0,100,5);h+=ss('sm-ia','수동조정',0,-20,20,1);
+  h+=`<div class="sim-r" id="sim-r"></div>`;
+  document.getElementById('simB').innerHTML=h;
+  document.getElementById('pov').classList.add('show');document.getElementById('simP').classList.add('show');
+  calcSim();
+}
+function ss(id,l,v,mn,mx,st){return`<div class="fld"><label>${l}</label><div class="fr"><input type="range" id="${id}" min="${mn}" max="${mx}" step="${st}" value="${v}" oninput="document.getElementById('${id}-v').textContent=this.value;calcSim()"><span class="fv" id="${id}-v">${v}</span></div></div>`}
+function calcSim(){
+  const sc=+document.getElementById('sm-sc').value,pp=+document.getElementById('sm-pp').value,nc=+document.getElementById('sm-nc').value,fa=+document.getElementById('sm-fa').value;
+  const sd=+document.getElementById('sm-sd').value,co=+document.getElementById('sm-co').value,qu=+document.getElementById('sm-qu').value,ia=+document.getElementById('sm-ia').value;
+  const sN=Math.min(sc/10*100,100),pN=Math.min(pp/10000*100,100),nN=Math.min(nc/20*100,100);
+  const fR=sN*(C.fS/100)+pN*(C.fP/100)+nN*(C.fN/100),fS=Math.min(100,Math.max(0,fR+fa));
+  const iR=sd*(C.iS/100)+co*(C.iC/100)+qu*(C.iQ/100),iS=Math.min(100,Math.max(0,iR+ia));
+  const tot=Math.round((fS*C.wF/100+iS*C.wI/100)*10)/10,g=grade(tot),gi=GI[g-1];
+  const el=document.getElementById('sim-r');if(!el)return;
+  el.innerHTML=`<div style="font-size:11px;color:var(--sub)">F=${fS.toFixed(1)}×${C.wF}% + I=${iS.toFixed(1)}×${C.wI}%</div><div class="sim-s" style="color:${gi.c}">${tot}</div><div class="sim-g" style="color:${gi.c}">${gi.l} (${gi.d})</div><div style="font-size:11px;margin-top:5px;color:${isMaj(g)?'var(--dn)':'var(--sub)'}">${isMaj(g)?'→ 주요기자재 (QC Gate 대상)':'→ 일반 관리'}</div>`;
+}
+function closePanel(){document.getElementById('pov').classList.remove('show');document.getElementById('setP').classList.remove('show');document.getElementById('simP').classList.remove('show')}
+
+/* ========== DUMMY LOGIC ========== */
+function getLL(id){
+  const e=EQ.find(x=>x.id===id);if(!e)return[];
+  const items=[],n=e.lT||3;
+  const issues=[
+    {c:'소재/용접', ct:'비파괴검사(RT) 성적서 필수 제출 및 검토', sr:'LL-21-H04'},
+    {c:'설치/치수', ct:'도면 상 분할 반입 치수 및 중량 계측표 사전 검증', sr:'LL-23-D12'},
+    {c:'진동/소음', ct:'FAT(공장수락시험) 시 공인 진동/소음 성적서 확인', sr:'LL-22-V01'}
+  ];
+  for(let i=0;i<n;i++){
+    const base = issues[i%issues.length];
+    const isProof = (i === n - 1) ? true : (i % 2 === 0); 
+    const isDone = i < (e.lD||0);
+    items.push({
+      n:i+1, t:isProof?'proof':'check', c:base.c, ct:base.ct, sr:base.sr,
+      d:isDone, ev:isDone?(isProof?`성적서_${id}.pdf`:null):null, ed:isDone?'2025-04-10':null, es:isDone?'승인':null
+    });
+  }
+  return items;
+}
+
+function getPOS(id){
+  const e=EQ.find(x=>x.id===id);if(!e)return[];
+  const items=[],n=e.pT||3;
+  const specs=[
+    {cl:'기계-01(출력)', rq:'정격 출력 (Rated Power)', u:'kW', st:'≥ 12,000', rn:'-0%', vd:'12,050', dv:'-', jd:'PASS'},
+    {cl:'기계-02(진동)', rq:'최대 허용 진동 (Max)', u:'mm/s', st:'< 2.0', rn:'+5%', vd:'2.5', dv:'+0.5 초과', jd:'FAIL'},
+    {cl:'소재-01(강도)', rq:'항복 강도 (Yield)', u:'MPa', st:'≥ 550', rn:'-2%', vd:'545', dv:'-5 (허용)', jd:'WARN'}
+  ];
+  
+  let failsRemaining = e.pG || 0;
+  for(let i=0;i<n;i++){
+    if(failsRemaining > 0) {
+      items.push(specs[1]); failsRemaining--;
+    } else {
+      items.push(specs[i%specs.length === 1 ? 0 : i%specs.length]);
+    }
+  }
+  return items.map((it, idx) => ({...it, id: idx}));
+}
+
+/* ========== INIT ========== */
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+initLogin();
+</script>
+</body>
+</html>
