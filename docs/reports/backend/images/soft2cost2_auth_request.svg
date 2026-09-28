@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="640" viewBox="0 0 1000 640" font-family="Malgun Gothic, Apple SD Gothic Neo, Noto Sans KR, Arial, sans-serif">
+<rect width="1000" height="640" fill="#ffffff"/>
+<defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/></marker></defs>
+<rect x="330" y="40" width="260" height="50" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="460.0" y="70.0" text-anchor="middle" font-size="14" fill="#1f2933">UsernamePasswordAuthenticationToken</text>
+<text x="20" y="205" font-size="13" fill="#1f2933" font-weight="normal" text-anchor="start">Http Request</text>
+<text x="20" y="222" font-size="12" fill="#46505c" font-weight="normal" text-anchor="start">X-Auth-Token</text>
+<line x1="20" y1="235" x2="148" y2="235" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="80" y="258" font-size="13" font-weight="bold" fill="#1f2933">1</text>
+<rect x="150" y="205" width="190" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="245.0" y="231.0" text-anchor="middle" font-size="14" fill="#1f2933">RedisTokenFilter</text>
+<text x="245.0" y="249.0" text-anchor="middle" font-size="12" fill="#46505c">OncePerRequestFilter</text>
+<line x1="270" y1="203" x2="420" y2="92" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="330" y="150" font-size="13" font-weight="bold" fill="#1f2933">6</text>
+<rect x="470" y="205" width="220" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="580.0" y="231.0" text-anchor="middle" font-size="14" fill="#1f2933">RedisAuthSessionService</text>
+<text x="580.0" y="249.0" text-anchor="middle" font-size="12" fill="#46505c">find(accessToken)</text>
+<line x1="340" y1="222" x2="468" y2="222" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="400" y="214" font-size="13" font-weight="bold" fill="#1f2933">2</text>
+<line x1="468" y1="250" x2="342" y2="250" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="400" y="270" font-size="13" font-weight="bold" fill="#1f2933">5</text>
+<text x="380" y="288" font-size="12" fill="#46505c" font-weight="normal" text-anchor="start">AuthSessionContext</text>
+<rect x="800" y="205" width="180" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="890.0" y="231.0" text-anchor="middle" font-size="14" fill="#1f2933">Redis</text>
+<text x="890.0" y="249.0" text-anchor="middle" font-size="12" fill="#46505c">session:{SHA-256}</text>
+<line x1="690" y1="222" x2="798" y2="222" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="740" y="214" font-size="13" font-weight="bold" fill="#1f2933">3</text>
+<line x1="798" y1="250" x2="692" y2="250" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="740" y="270" font-size="13" font-weight="bold" fill="#1f2933">4</text>
+<text x="700" y="288" font-size="12" fill="#46505c" font-weight="normal" text-anchor="start">JSON → AuthSessionContext</text>
+<line x1="245" y1="265" x2="245" y2="338" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="253" y="305" font-size="13" font-weight="bold" fill="#1f2933">7</text>
+<rect x="110" y="340" width="290" height="160" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="255.0" y="425.0" text-anchor="middle" font-size="14" fill="#1f2933"></text>
+<text x="255" y="362" font-size="14" fill="#1f2933" font-weight="normal" text-anchor="middle">SecurityContextHolder</text>
+<rect x="125" y="375" width="260" height="110" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="255.0" y="435.0" text-anchor="middle" font-size="14" fill="#1f2933"></text>
+<text x="255" y="397" font-size="14" fill="#1f2933" font-weight="normal" text-anchor="middle">SecurityContext</text>
+<rect x="145" y="410" width="220" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="255.0" y="436.0" text-anchor="middle" font-size="14" fill="#1f2933">Authentication</text>
+<text x="255.0" y="454.0" text-anchor="middle" font-size="12" fill="#46505c">principal = AuthSessionContext</text>
+<rect x="470" y="370" width="220" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="580.0" y="396.0" text-anchor="middle" font-size="14" fill="#1f2933">AuthorizationFilter</text>
+<text x="580.0" y="414.0" text-anchor="middle" font-size="12" fill="#46505c">anyRequest().authenticated()</text>
+<line x1="330" y1="265" x2="520" y2="368" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="430" y="315" font-size="13" font-weight="bold" fill="#1f2933">8</text>
+<rect x="470" y="480" width="220" height="60" fill="#fdecea" stroke="#d19a95" stroke-width="1.5"/>
+<text x="580.0" y="506.0" text-anchor="middle" font-size="14" fill="#1f2933">ApiAuthenticationEntryPoint</text>
+<text x="580.0" y="524.0" text-anchor="middle" font-size="12" fill="#46505c">401 · E303</text>
+<line x1="580" y1="430" x2="580" y2="478" stroke="#b42318" stroke-width="1.4" marker-end="url(#a)" stroke-dasharray="5 4"/>
+<text x="588" y="462" font-size="12" fill="#b42318" font-weight="normal" text-anchor="start">인증 없음</text>
+<rect x="770" y="370" width="210" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="875.0" y="396.0" text-anchor="middle" font-size="14" fill="#1f2933">Controller</text>
+<text x="875.0" y="414.0" text-anchor="middle" font-size="12" fill="#46505c">@AuthenticationPrincipal</text>
+<line x1="690" y1="400" x2="768" y2="400" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="722" y="392" font-size="13" font-weight="bold" fill="#1f2933">9</text>
+<rect x="770" y="480" width="210" height="60" fill="#dce6f2" stroke="#6f86a6" stroke-width="1.5"/>
+<text x="875.0" y="506.0" text-anchor="middle" font-size="14" fill="#1f2933">PermissionGuard</text>
+<text x="875.0" y="524.0" text-anchor="middle" font-size="12" fill="#46505c">require(session, 메뉴코드, R/W)</text>
+<line x1="875" y1="430" x2="875" y2="478" stroke="#1f2933" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="883" y="462" font-size="13" font-weight="bold" fill="#1f2933">10</text>
+<text x="770" y="562" font-size="12" fill="#b42318" font-weight="normal" text-anchor="start">권한 부족 → 403 · E304</text>
+<text x="110" y="525" font-size="12" fill="#1f2933" font-weight="bold" text-anchor="start">RedisTokenFilter 추가 검사</text>
+<text x="110" y="544" font-size="12" fill="#b42318" font-weight="normal" text-anchor="start">· 초기 비밀번호 변경 필요 → 403 · E305</text>
+<text x="110" y="562" font-size="12" fill="#b42318" font-weight="normal" text-anchor="start">· Redis 장애 → 503 · E503</text>
+<text x="110" y="605" font-size="17" fill="#1f2933" font-weight="bold" text-anchor="start">soft2cost2 요청 인증 구조</text>
+<text x="110" y="627" font-size="13" fill="#46505c" font-weight="normal" text-anchor="start">로그인 이후 모든 요청 (예: GET /api/v1/navigation/menus)</text>
+</svg>
